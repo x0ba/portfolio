@@ -1,14 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import heroImage from "@/images/hero.jpg";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
 ---
 
-<div
-  class="flex flex-col lg:flex-row-reverse gap-4 items-start justify-between"
->
-  <div class="flex-none lg:w-66 w-56 rotate-0 lg:rotate-3">
+<div class="flex flex-row-reverse flex-wrap gap-10 items-center justify-center">
+  <div class="flex-none w-56 lg:w-66 rotate-3">
     <Image
       class="rounded-lg"
       src={heroImage}
@@ -17,7 +15,7 @@ import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
       loading="eager"
     />
   </div>
-  <div class="flex flex-col gap-4 flex-1 max-w-[70%] lg:max-w-[60%]">
+  <div class="flex flex-col gap-4 flex-1 min-w-75">
     <div class="text-3xl sm:text-5xl font-serif">Hi <br /> I'm Daniel</div>
     <div class="flex items-center gap-2 sm:text-lg text-base">
       <MapPin class="w-4 h-4" /> La Jolla, CA
@@ -27,12 +25,12 @@ import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
       <br /> Math + CS at UCSD 🔱 <br />
     </div>
     <div class="flex items-center gap-4">
-      <Button>
+      <a href="/resume.pdf" class={buttonVariants()}>
         <div class="flex items-center gap-2">
-          <a href="/resume.pdf">Resume</a>
+          Resume
           <FileUser class="w-4 h-4" />
         </div>
-      </Button>
+      </a>
       <a
         href="https://www.linkedin.com/in/daniel-xu-sd"
         aria-label="LinkedIn"

@@ -22,26 +22,8 @@ const educations = [
 export default function Education() {
   const [education, setEducation] = useState(false);
   return (
-    <div className="w-1/2 flex flex-col gap-4">
-      <div className="font-serif font-semibold text-2xl">Education</div>
-      {educations.map((education) => {
-        return (
-          <Card>
-            <CardHeader>
-              <CardDescription>{education.dates}</CardDescription>
-              <CardTitle>{education.school}</CardTitle>
-              <CardDescription>{education.degree}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="list-disc list-inside">
-                {education.description.map((description) => {
-                  return <li>{description}</li>;
-                })}
-              </ul>
-            </CardContent>
-          </Card>
-        );
-      })}
+    <div>
+      <Tabs defaultValue="experience"></Tabs>
     </div>
   );
 }
