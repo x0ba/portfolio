@@ -1,0 +1,23 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/navbar.astro";
+import "@fontsource-variable/figtree";
+import "@fontsource-variable/lora";
+import "@fontsource/calistoga";
+---
+
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Daniel Xu.</title>
+  </head>
+  <body class="text-white bg-bg">
+    <Navbar />
+    <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4">
+      <slot />
+    </main>
+  </body>
+</html>
