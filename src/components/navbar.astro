@@ -1,14 +1,15 @@
 ---
-
+import Logo from "@/images/dx.svg";
+import { Image } from "astro:assets";
 ---
 
 <nav
-  class="bg-bg/50 backdrop-blur-sm h-16 fixed top-0 left-0 right-0 z-50 flex flex-col justify-center"
+  class="bg-foreground-primary/90 backdrop-blur-sm h-16 fixed top-0 left-0 right-0 z-50 flex flex-col justify-center"
 >
   <div
     class="w-full max-w-3xl mx-auto px-4 flex gap-2 items-center justify-between"
   >
-    <span class="text-gray-400 text-3xl font-serif">Daniel Xu</span>
+    <div><Logo width={128} height={128} /></div>
     <div class="flex gap-5 md:gap-10">
       <a
         class="text-gray-400 hover:text-white transition-colors duration-300"
