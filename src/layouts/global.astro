@@ -18,8 +18,8 @@ interface Props {
 }
 
 const {
-  title = "Daniel Xu",
-  description = "Full stack software engineer passionate about building beautiful and functional applications.",
+  title = "Daniel Xu | Full Stack Software Engineer",
+  description = "Full stack software engineer passionate about building beautiful and functional applications that solve real-world problems. Math + CS at UCSD.",
   image = heroImage,
 } = Astro.props;
 
@@ -52,7 +52,6 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
   <meta property="twitter:description" content={description} />
   <meta property="twitter:image" content={socialImageURL} />
   <link rel="sitemap" href="/sitemap-index.xml" />
-
 
   <body
     class="text-primary-background bg-primary-foreground flex flex-col min-h-screen"
