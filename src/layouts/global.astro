@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
+import { StarsBackground } from "../components/ui/stars-background";
 import "@fontsource-variable/figtree";
 import "@fontsource-variable/lora";
 import "@fontsource/calistoga";
@@ -16,6 +17,7 @@ import "@fontsource/calistoga";
     <title>Daniel Xu.</title>
   </head>
   <body class="text-white bg-bg flex flex-col min-h-screen">
+    <StarsBackground client:load />
     <Navbar />
     <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
       <slot />

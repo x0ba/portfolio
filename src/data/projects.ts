@@ -1,9 +1,17 @@
+import type { ImageMetadata } from "astro";
+import scheduleSyncImg from "../images/schedulesync.png";
+import dashboardImg from "../images/dashboard.png";
+import xgalleryImg from "../images/xgallery.png";
+import ssaLandingImg from "../images/ssalanding.png";
+import snakeImg from "../images/snake.png";
+
 interface Project {
   name: string;
   description: string;
   category: "all" | "web" | "aiml";
   featured: boolean;
   tags: string[];
+  image: ImageMetadata;
   link?: string;
   code?: string;
 }
@@ -16,6 +24,7 @@ export const projects: Project[] = [
     tags: ["nextjs", "trpc", "ai-sdk", "google-calendar-api"],
     category: "web",
     featured: true,
+    image: scheduleSyncImg,
     link: "https://schedulesync.tech",
     code: "https://github.com/x0ba/schedulesync",
   },
@@ -26,6 +35,7 @@ export const projects: Project[] = [
     tags: ["nextjs", "drizzle", "postgresql"],
     category: "web",
     featured: true,
+    image: dashboardImg,
     link: "https://members.ssaucsd.org",
     code: "https://github.com/x0ba/ssa-dashboard",
   },
@@ -36,6 +46,7 @@ export const projects: Project[] = [
     tags: ["nextjs", "postgresql", "drizzle", "parallel-routing"],
     category: "web",
     featured: false,
+    image: xgalleryImg,
     link: "https://gallery.danielx.me",
     code: "https://github.com/x0ba/xgallery",
   },
@@ -46,6 +57,7 @@ export const projects: Project[] = [
     tags: ["nextjs", "tailwindcss", "postgresql"],
     category: "web",
     featured: false,
+    image: ssaLandingImg,
     link: "https://ssaucsd.org",
     code: "https://github.com/x0ba/ssa-site",
   },
@@ -56,6 +68,7 @@ export const projects: Project[] = [
     tags: ["pytorch", "numpy", "pygame", "matplotlib"],
     category: "aiml",
     featured: false,
+    image: snakeImg,
     code: "https://github.com/x0ba/ai-snake-pytorch",
   },
 ];

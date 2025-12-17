@@ -57,7 +57,7 @@ export default function Stack() {
         {stack.map((item) => (
           <div
             key={item.name}
-            className="flex items-center gap-2 py-1 px-2 rounded-lg border border-gray-400"
+            className="flex items-center gap-2 py-1 px-2 rounded-lg bg-primary text-primary-foreground"
           >
             <item.icon />
             {item.name}

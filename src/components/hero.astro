@@ -20,12 +20,17 @@ import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
     <div class="flex items-center gap-2 sm:text-lg text-base">
       <MapPin class="w-4 h-4" /> La Jolla, CA
     </div>
-    <div class="text-base sm:text-lg text-gray-400 text-wrap">
-      Full stack software engineer
-      <br /> Math + CS at UCSD 🔱 <br />
+    <div class="text-base sm:text-lg text-wrap">
+      💻 Full stack software engineer
+      <br /> 🔱 Math + CS at UCSD
     </div>
     <div class="flex items-center gap-4">
-      <a href="/resume.pdf" class={buttonVariants()}>
+      <a
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        class={buttonVariants()}
+      >
         <div class="flex items-center gap-2">
           Resume
           <FileUser class="w-4 h-4" />

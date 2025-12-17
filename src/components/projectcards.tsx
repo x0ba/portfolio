@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { projects } from "@/data/projects";
 import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { SiGithub } from "react-icons/si";
 import { RiExternalLinkFill } from "react-icons/ri";
 
@@ -21,7 +21,12 @@ const tabs = [
 
 export function ProjectCard({ project }: { project: (typeof projects)[0] }) {
   return (
-    <Card className="w-full flex flex-col h-full">
+    <Card className="w-full flex flex-col h-full overflow-hidden">
+      <img
+        src={project.image.src}
+        alt={project.name}
+        className="w-full h-54 object-cover"
+      />
       <CardHeader className="flex flex-col items-start gap-2">
         <CardTitle>{project.name}</CardTitle>
         <div className="flex flex-wrap items-center gap-2">
@@ -36,19 +41,29 @@ export function ProjectCard({ project }: { project: (typeof projects)[0] }) {
       <CardFooter>
         <div className="flex flex-wrap items-center gap-2">
           {project.link && (
-            <a href={project.link} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="flex items-center gap-2">
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants()}
+            >
+              <div className="flex items-center gap-2">
                 <RiExternalLinkFill />
                 Demo
-              </Button>
+              </div>
             </a>
           )}
           {project.code && (
-            <a href={project.code} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" className="flex items-center gap-2">
+            <a
+              href={project.code}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonVariants()}
+            >
+              <div className="flex items-center gap-2">
                 <SiGithub />
                 Code
-              </Button>
+              </div>
             </a>
           )}
         </div>
