@@ -5,7 +5,7 @@ import xgalleryImg from "../images/xgallery.png";
 import ssaLandingImg from "../images/ssalanding.png";
 import snakeImg from "../images/snake.png";
 
-interface Project {
+export interface Project {
   name: string;
   description: string;
   category: "all" | "web" | "aiml";

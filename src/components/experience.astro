@@ -7,24 +7,24 @@ import { experiences } from "../data/experience";
   <div class="border border-neutral-800 rounded-3xl p-6 sm:p-10">
     <div class="relative border-l border-neutral-700 space-y-12 pl-8 py-2">
       {
-        experiences.map((edu) => (
+        experiences.map((exp) => (
           <div class="relative">
             <div class="absolute -left-11 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black border border-neutral-700">
               <div class="h-2 w-2 rounded-full bg-neutral-500" />
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-sm font-mono text-neutral-400">
-                {edu.startYear} - {edu.endYear}
+                {exp.startYear} - {exp.endYear}
               </span>
               <h3 class="text-lg font-semibold text-neutral-100">
-                {edu.company}
+                {exp.company}
               </h3>
               <p class="text-base font-medium text-neutral-300">
-                {edu.position}
+                {exp.position}
               </p>
-              {edu.description && (
+              {exp.description && (
                 <p class="mt-2 text-sm text-neutral-400 max-w-prose leading-relaxed">
-                  {edu.description}
+                  {exp.description}
                 </p>
               )}
             </div>

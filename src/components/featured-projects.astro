@@ -1,0 +1,27 @@
+---
+import { projects } from "@/data/projects";
+import ProjectCard from "@/components/project-card.astro";
+import { ArrowRight } from "lucide-react";
+---
+
+<div class="flex flex-col gap-4">
+  <div
+    class="flex items-center justify-between font-serif font-semibold text-2xl sm:text-3xl"
+  >
+    Featured Projects
+    <a
+      href="/projects"
+      class="text-gray-400 font-sans flex items-center gap-1 text-base"
+    >
+      See all
+      <ArrowRight width={20} height={20} />
+    </a>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {
+      projects
+        .filter((project) => project.featured)
+        .map((project) => <ProjectCard project={project} />)
+    }
+  </div>
+</div>

@@ -1,11 +1,25 @@
 ---
 import GlobalLayout from "../layouts/global.astro";
-import ProjectCards from "../components/projectcards";
+import ProjectTabs from "../components/project-tabs";
+import ProjectCard from "../components/project-card.astro";
+import { projects } from "../data/projects";
 ---
 
 <GlobalLayout>
   <div class="flex flex-col gap-20">
     <h1 class="text-3xl sm:text-5xl font-serif">My Projects</h1>
-    <ProjectCards client:load />
+    <ProjectTabs client:load>
+      {projects.map((project) => <ProjectCard slot="all" project={project} />)}
+      {
+        projects
+          .filter((p) => p.category === "web")
+          .map((project) => <ProjectCard slot="web" project={project} />)
+      }
+      {
+        projects
+          .filter((p) => p.category === "aiml")
+          .map((project) => <ProjectCard slot="aiml" project={project} />)
+      }
+    </ProjectTabs>
   </div>
 </GlobalLayout>
