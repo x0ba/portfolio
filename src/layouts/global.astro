@@ -8,6 +8,23 @@ import "@fontsource-variable/inter";
 import "@fontsource/bebas-neue";
 import "@fontsource-variable/geist-mono";
 import Analytics from "@vercel/analytics/astro";
+import { getImage } from "astro:assets";
+import heroImage from "../images/hero.jpg";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: ImageMetadata;
+}
+
+const {
+  title = "Daniel Xu",
+  description = "Full stack software engineer passionate about building beautiful and functional applications.",
+  image = heroImage,
+} = Astro.props;
+
+const optimizedImage = await getImage({ src: image, format: "webp" });
+const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
 ---
 
 <html lang="en" class="dark">
@@ -17,7 +34,22 @@ import Analytics from "@vercel/analytics/astro";
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width" />
   <meta name="generator" content={Astro.generator} />
-  <title>Daniel Xu.</title>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={Astro.url} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={socialImageURL} />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={Astro.url} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={socialImageURL} />
   <link rel="sitemap" href="/sitemap-index.xml" />
 
   <body
