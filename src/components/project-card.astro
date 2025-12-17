@@ -30,7 +30,7 @@ const { project } = Astro.props;
     <CardTitle className="text-lg font-bold">{project.name}</CardTitle>
     <p class="text-sm text-muted-foreground">{project.description}</p>
     <div class="flex flex-wrap items-center gap-2">
-      {project.tags.map((tag) => <Badge>{tag}</Badge>)}
+      {project.tags.map((tag) => <Badge variant="secondary">{tag}</Badge>)}
     </div>
   </CardContent>
   <CardFooter>
