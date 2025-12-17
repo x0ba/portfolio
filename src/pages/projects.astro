@@ -1,0 +1,11 @@
+---
+import GlobalLayout from "../layouts/global.astro";
+import ProjectCards from "../components/projectcards";
+---
+
+<GlobalLayout>
+  <div class="flex flex-col gap-20">
+    <h1 class="text-3xl sm:text-5xl font-serif">My Projects</h1>
+    <ProjectCards client:load />
+  </div>
+</GlobalLayout>

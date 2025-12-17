@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Navbar from "../components/navbar.astro";
+import Footer from "../components/footer.astro";
 import "@fontsource-variable/figtree";
 import "@fontsource-variable/lora";
 import "@fontsource/calistoga";
@@ -14,10 +15,11 @@ import "@fontsource/calistoga";
     <meta name="generator" content={Astro.generator} />
     <title>Daniel Xu.</title>
   </head>
-  <body class="text-white bg-bg">
+  <body class="text-white bg-bg flex flex-col min-h-screen">
     <Navbar />
-    <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4">
+    <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>

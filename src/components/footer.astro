@@ -1,0 +1,32 @@
+---
+import { Github, Linkedin, Mail } from "@lucide/astro";
+---
+
+<footer
+  class="w-full max-w-3xl mx-auto px-4 py-8 flex items-center justify-between"
+>
+  <div class="flex flex-col gap-2">
+    <span class="text-gray-400">© {new Date().getFullYear()} Daniel Xu.</span>
+    <span class="text-gray-400">Made w/ Astro, React, & Tailwind.</span>
+  </div>
+  <div class="flex items-center gap-3">
+    <a
+      href="https://www.linkedin.com/in/daniel-xu-sd"
+      aria-label="LinkedIn"
+      class="hover:text-white transition-colors duration-300 text-gray-400"
+      target="_blank"><Linkedin class="w-6 h-6" /></a
+    >
+    <a
+      href="https://github.com/x0ba"
+      aria-label="GitHub"
+      class="hover:text-white transition-colors duration-300 text-gray-400"
+      target="_blank"><Github class="w-6 h-6" /></a
+    >
+    <a
+      href="mailto:hi@danielx.me"
+      aria-label="Email"
+      class="hover:text-white transition-colors duration-300 text-gray-400"
+      target="_blank"><Mail class="w-6 h-6" /></a
+    >
+  </div>
+</footer>
