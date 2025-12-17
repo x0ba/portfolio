@@ -4,7 +4,9 @@ import { education } from "../data/education";
 
 <div class="flex flex-col gap-4">
   <h2 class="font-serif font-semibold text-2xl sm:text-3xl">Education</h2>
-  <div class="border border-border rounded-3xl p-6 sm:p-10 bg-card">
+  <div
+    class="border border-border rounded-3xl p-6 sm:p-10 bg-card shadow-xl dark:shadow-none"
+  >
     <div class="relative border-l border-border space-y-12 pl-8 py-2">
       {
         education.map((edu) => (
