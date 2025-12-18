@@ -88,23 +88,9 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
       const isDark = document.documentElement.classList.contains("dark");
       localStorage.setItem("theme", isDark ? "dark" : "light");
     });
-    // Note: The previous observer was observing class changes and forcing localStorage update
-    // This arguably fights with the react component if not careful.
-    // Better to let the React component handle the state updates and localStorage,
-    // and this script just handles the initial flash prevention.
-  }
-
-  // Handle system theme changes
-  window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", (e) => {
-      if (
-        localStorage.getItem("theme") === "system" ||
-        !localStorage.getItem("theme")
-      ) {
-        document.documentElement.classList[e.matches ? "add" : "remove"](
-          "dark"
-        );
-      }
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
     });
+  }
 </script>

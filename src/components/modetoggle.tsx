@@ -2,64 +2,57 @@ import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 export function ModeToggle() {
-  const [theme, setThemeState] = React.useState<
-    "theme-light" | "dark" | "system"
-  >("system");
+  const [theme, setThemeState] = React.useState<"theme-light" | "dark">(
+    "theme-light"
+  );
 
   React.useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains("dark");
-    // Check local storage to see if we have a saved preference
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark" || savedTheme === "light") {
-      setThemeState(savedTheme === "dark" ? "dark" : "theme-light");
-    } else {
-      setThemeState("system");
-    }
+    setThemeState(isDarkMode ? "dark" : "theme-light");
   }, []);
 
   React.useEffect(() => {
     const isDark =
       theme === "dark" ||
-      (theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+      (theme === "theme-light" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches &&
+        !localStorage.getItem("theme")); // Only fall back to system if NO storage
 
-    // Save to local storage
-    if (theme === "system") {
-      localStorage.removeItem("theme");
+    // Actually, simpler: we just enforce what the state is, assuming state is correct.
+    // But wait, if we toggle to 'light', we want to force 'light' even if system is dark.
+
+    // Let's stick to the plan: explicit 'light' or 'dark' writing to storage.
+    const isEffectiveDark = theme === "dark";
+
+    document.documentElement.classList[isEffectiveDark ? "add" : "remove"](
+      "dark"
+    );
+
+    // We only want to write to localStorage if it's a user action, but here we are in an effect.
+    // It's safer to just write the current state to localStorage,
+    // BUT we need to be careful not to overwrite 'system' preference on initial load if we wanted to keep it,
+    // but the requirement is to "remove the system option".
+    // So enforcing an explicit setting is fine.
+
+    if (theme === "dark") {
+      localStorage.setItem("theme", "dark");
     } else {
-      localStorage.setItem("theme", theme === "dark" ? "dark" : "light");
+      localStorage.setItem("theme", "light");
     }
   }, [theme]);
 
+  // Re-write to ensure clean initial hydration
+  const toggleTheme = () => {
+    setThemeState((prev) => (prev === "dark" ? "theme-light" : "dark"));
+  };
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setThemeState("theme-light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setThemeState("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setThemeState("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button variant="outline" size="icon" onClick={toggleTheme}>
+      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }
