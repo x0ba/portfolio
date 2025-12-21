@@ -52,6 +52,15 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
     <meta property="twitter:image" content={socialImageURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    <script is:inline>
+      const theme = localStorage.getItem("theme");
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+
     <Analytics />
   </head>
 
@@ -65,32 +74,3 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
     <Footer />
   </body>
 </html>
-
-<script is:inline>
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    return "system";
-  };
-  const isDark = (theme) => {
-    if (theme === "system") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return theme === "dark";
-  };
-  const theme = getThemePreference();
-  document.documentElement.classList[isDark(theme) ? "add" : "remove"]("dark");
-
-  if (typeof localStorage !== "undefined") {
-    // Watch for system changes if theme is system
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
-</script>

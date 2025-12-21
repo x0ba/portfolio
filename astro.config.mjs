@@ -9,6 +9,8 @@ import vercel from "@astrojs/vercel";
 
 import sitemap from "@astrojs/sitemap";
 
+import sanity from "@sanity/astro";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://danielx.me",
@@ -16,6 +18,19 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [react(), sitemap()],
+  image: {
+    domains: ["cdn.sanity.io"],
+  },
+
+  integrations: [
+    react(),
+    sitemap(),
+    sanity({
+      projectId: "84m1lpmy",
+      dataset: "production",
+      useCdn: false,
+      studioBasePath: "/studio",
+    }),
+  ],
   adapter: vercel(),
 });

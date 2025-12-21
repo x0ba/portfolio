@@ -1,5 +1,7 @@
 ---
-import { education } from "../data/education";
+import { getEducation } from "@/lib/sanity";
+
+const education = await getEducation();
 ---
 
 <div class="flex flex-col gap-4">

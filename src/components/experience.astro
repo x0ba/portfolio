@@ -1,5 +1,7 @@
 ---
-import { experiences } from "../data/experience";
+import { getExperiences } from "@/lib/sanity";
+
+const experiences = await getExperiences();
 ---
 
 <div class="flex flex-col gap-4">

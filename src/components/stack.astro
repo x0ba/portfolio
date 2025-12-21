@@ -1,0 +1,8 @@
+---
+import { getStackItems } from "@/lib/sanity";
+import Stack from "./stack";
+
+const stackItems = await getStackItems();
+---
+
+<Stack items={stackItems} client:load />
