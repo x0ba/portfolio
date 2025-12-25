@@ -1,5 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { SanityProject, SanityCategory } from "@/lib/sanity";
+import { SiGithub } from "react-icons/si";
+import { RiExternalLinkFill } from "react-icons/ri";
 
 // Extended type with optimized image URL from Astro
 interface ProjectWithOptimizedImage extends SanityProject {
@@ -51,6 +53,7 @@ function ProjectCardInner({ project }: ProjectCardProps) {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
             >
+              <RiExternalLinkFill />
               Demo
             </a>
           )}
@@ -61,6 +64,7 @@ function ProjectCardInner({ project }: ProjectCardProps) {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2"
             >
+              <SiGithub />
               Code
             </a>
           )}
