@@ -1,6 +1,6 @@
 import { sanityClient } from "sanity:client";
 import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import type { SanityImageSource } from "@sanity/image-url";
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -145,6 +145,22 @@ export async function getStackItems(): Promise<SanityStackItem[]> {
       name,
       iconName,
       order
+    }`
+  );
+}
+
+export interface SanitySiteSettings {
+  _id: string;
+  title?: string;
+  resumeUrl?: string;
+}
+
+export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
+  return await sanityClient.fetch(
+    `*[_type == "siteSettings"][0] {
+      _id,
+      title,
+      "resumeUrl": resume.asset->url
     }`
   );
 }

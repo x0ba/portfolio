@@ -3,6 +3,10 @@ import { Image } from "astro:assets";
 import heroImage from "@/images/hero.jpg";
 import { buttonVariants } from "@/components/ui/button";
 import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
+import { getSiteSettings } from "@/lib/sanity";
+
+const siteSettings = await getSiteSettings();
+const resumeUrl = siteSettings?.resumeUrl ?? "/resume.pdf";
 ---
 
 <div class="flex flex-row-reverse flex-wrap gap-10 items-center justify-center">
@@ -18,7 +22,7 @@ import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
   <div class="flex flex-col gap-4 flex-1 min-w-75">
     <h1 class="text-3xl sm:text-5xl font-serif">Daniel Xu</h1>
     <div class="flex items-center gap-2 sm:text-lg text-base font-semibold">
-      <MapPin class="w-4 h-4" /> La Jolla, CA
+      <MapPin class="w-4 h-4" />La Jolla, CA
     </div>
     <div class="text-base sm:text-lg text-wrap">
       Full stack software engineer specializing in building scalable web
@@ -26,7 +30,7 @@ import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
     </div>
     <div class="flex items-center gap-4">
       <a
-        href="/resume.pdf"
+        href={resumeUrl}
         target="_blank"
         rel="noopener noreferrer"
         class={buttonVariants()}
