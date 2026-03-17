@@ -164,3 +164,8 @@ export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
     }`
   );
 }
+
+export async function getResumeUrl(): Promise<string | null> {
+  const siteSettings = await getSiteSettings();
+  return siteSettings?.resumeUrl ?? null;
+}
