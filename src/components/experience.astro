@@ -4,37 +4,26 @@ import { getExperiences } from "@/lib/sanity";
 const experiences = await getExperiences();
 ---
 
-<div class="flex flex-col gap-4">
-  <h2 class="font-serif font-semibold text-2xl sm:text-3xl">Experience</h2>
-  <div
-    class="border border-border bg-card rounded-3xl p-6 sm:p-10 shadow-xl dark:shadow-none"
-  >
-    <div class="relative border-l border-border space-y-12 pl-8 py-2">
-      {
-        experiences.map((exp) => (
-          <div class="relative">
-            <div class="absolute -left-11 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-background border border-border">
-              <div class="h-2 w-2 rounded-full bg-muted-foreground" />
-            </div>
-            <div class="flex flex-col gap-1">
-              <span class="text-sm font-mono text-muted-foreground">
-                {exp.startYear} - {exp.endYear}
-              </span>
-              <h3 class="text-lg font-semibold text-foreground">
-                {exp.company}
-              </h3>
-              <p class="text-base font-medium text-muted-foreground">
-                {exp.position}
-              </p>
-              {exp.description && (
-                <p class="mt-2 text-sm text-muted-foreground max-w-prose leading-relaxed">
-                  {exp.description}
-                </p>
-              )}
-            </div>
+<div class="flex flex-col gap-3">
+  <h2 class="text-xl sm:text-2xl font-serif">Experience</h2>
+  <div class="flex flex-col divide-y divide-border">
+    {
+      experiences.map((exp) => (
+        <div class="py-4 first:pt-0 last:pb-0">
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+            <h3 class="font-medium text-foreground">{exp.company}</h3>
+            <span class="text-xs font-mono text-muted-foreground">
+              {exp.startYear} &mdash; {exp.endYear}
+            </span>
           </div>
-        ))
-      }
-    </div>
+          <p class="text-sm text-muted-foreground mt-0.5">{exp.position}</p>
+          {exp.description && (
+            <p class="mt-2 text-sm text-muted-foreground/75 leading-relaxed">
+              {exp.description}
+            </p>
+          )}
+        </div>
+      ))
+    }
   </div>
 </div>

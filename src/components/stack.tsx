@@ -7,18 +7,16 @@ interface StackProps {
 
 export default function Stack({ items }: StackProps) {
   return (
-    <div className="flex flex-col gap-4">
-      <div className="font-serif font-semibold text-2xl sm:text-3xl">
-        My Stack
-      </div>
-      <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col gap-3">
+      <div className="text-xl sm:text-2xl font-serif">Stack</div>
+      <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <div
             key={item._id}
-            className="flex items-center gap-2 py-1 px-2 rounded-lg bg-card border border-border text-foreground"
+            className="flex items-center gap-1.5 text-sm text-muted-foreground bg-secondary px-2.5 py-1 rounded-md"
           >
             {item.iconName && (
-              <Icon icon={item.iconName} width={20} height={20} />
+              <Icon icon={item.iconName} width={16} height={16} />
             )}
             {item.name}
           </div>

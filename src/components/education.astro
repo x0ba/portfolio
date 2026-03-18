@@ -4,37 +4,26 @@ import { getEducation } from "@/lib/sanity";
 const education = await getEducation();
 ---
 
-<div class="flex flex-col gap-4">
-  <h2 class="font-serif font-semibold text-2xl sm:text-3xl">Education</h2>
-  <div
-    class="border border-border rounded-3xl p-6 sm:p-10 bg-card shadow-xl dark:shadow-none"
-  >
-    <div class="relative border-l border-border space-y-12 pl-8 py-2">
-      {
-        education.map((edu) => (
-          <div class="relative">
-            <div class="absolute -left-[44px] top-1 flex h-6 w-6 items-center justify-center rounded-full bg-background border border-border">
-              <div class="h-2 w-2 rounded-full bg-muted-foreground" />
-            </div>
-            <div class="flex flex-col gap-1">
-              <span class="text-sm font-mono text-muted-foreground">
-                {edu.startYear} - {edu.endYear}
-              </span>
-              <h3 class="text-lg font-semibold text-foreground">
-                {edu.school}
-              </h3>
-              <p class="text-base font-medium text-muted-foreground">
-                {edu.degree}
-              </p>
-              {edu.description && (
-                <p class="mt-2 text-sm text-muted-foreground max-w-prose leading-relaxed">
-                  {edu.description}
-                </p>
-              )}
-            </div>
+<div class="flex flex-col gap-3">
+  <h2 class="text-xl sm:text-2xl font-serif">Education</h2>
+  <div class="flex flex-col divide-y divide-border">
+    {
+      education.map((edu) => (
+        <div class="py-4 first:pt-0 last:pb-0">
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
+            <h3 class="font-medium text-foreground">{edu.school}</h3>
+            <span class="text-xs font-mono text-muted-foreground">
+              {edu.startYear} &mdash; {edu.endYear}
+            </span>
           </div>
-        ))
-      }
-    </div>
+          <p class="text-sm text-muted-foreground mt-0.5">{edu.degree}</p>
+          {edu.description && (
+            <p class="mt-2 text-sm text-muted-foreground/75 leading-relaxed">
+              {edu.description}
+            </p>
+          )}
+        </div>
+      ))
+    }
   </div>
 </div>

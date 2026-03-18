@@ -1,57 +1,53 @@
 ---
 import { Image } from "astro:assets";
 import heroImage from "@/images/hero.webp";
-import { buttonVariants } from "@/components/ui/button";
-import { MapPin, FileUser, Linkedin, Github, Mail } from "@lucide/astro";
+import { FileUser, Linkedin, Github, Mail } from "@lucide/astro";
 ---
 
-<div class="flex flex-row-reverse flex-wrap gap-10 items-center justify-center">
-  <div class="flex-none w-66 rotate-3">
+<div class="flex flex-col gap-4">
+  <div class="flex items-center gap-5">
     <Image
-      class="rounded-lg shadow-xl dark:shadow-none"
+      class="rounded-2xl w-20 h-20 sm:w-24 sm:h-24 object-cover flex-none"
       src={heroImage}
       alt="Daniel Xu"
       quality={100}
       loading="eager"
     />
+    <div class="flex flex-col gap-1.5">
+      <h1 class="text-3xl sm:text-4xl font-serif leading-tight">Daniel Xu</h1>
+      <p class="text-sm sm:text-base text-muted-foreground">
+        Doohickey full stack engineer &middot; La Jolla, CA
+      </p>
+    </div>
   </div>
-  <div class="flex flex-col gap-4 flex-1 min-w-75">
-    <h1 class="text-3xl sm:text-5xl font-serif">Daniel Xu</h1>
-    <div class="flex items-center gap-2 sm:text-lg text-base font-semibold">
-      <MapPin class="w-4 h-4" />La Jolla, CA
-    </div>
-    <div class="text-base sm:text-lg text-wrap">
-      Doohickey full stack engineer.
-    </div>
-    <div class="flex items-center gap-4">
-      <a
-        href="/resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        class={buttonVariants()}
-      >
-        <div class="flex items-center gap-2">
-          View my Resume
-          <FileUser class="w-4 h-4" />
-        </div>
-      </a>
+  <div class="flex items-center gap-4">
+    <a
+      href="/resume.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors flex items-center gap-1.5"
+    >
+      <FileUser class="w-4 h-4" />
+      Resume
+    </a>
+    <div class="flex items-center gap-3">
       <a
         href="https://www.linkedin.com/in/daniel-xu-sd"
         aria-label="LinkedIn"
-        class="hover:text-foreground transition-colors duration-300 text-muted-foreground"
-        target="_blank"><Linkedin class="w-6 h-6" /></a
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        target="_blank"><Linkedin class="w-[18px] h-[18px]" /></a
       >
       <a
         href="https://github.com/x0ba"
         aria-label="GitHub"
-        class="hover:text-foreground transition-colors duration-300 text-muted-foreground"
-        target="_blank"><Github class="w-6 h-6" /></a
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        target="_blank"><Github class="w-[18px] h-[18px]" /></a
       >
       <a
         href="mailto:hi@danielx.me"
         aria-label="Email"
-        class="hover:text-foreground transition-colors duration-300 text-muted-foreground"
-        target="_blank"><Mail class="w-6 h-6" /></a
+        class="text-muted-foreground hover:text-foreground transition-colors"
+        target="_blank"><Mail class="w-[18px] h-[18px]" /></a
       >
     </div>
   </div>

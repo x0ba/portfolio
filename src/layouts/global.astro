@@ -2,8 +2,6 @@
 import "../styles/global.css";
 import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
-import { StarsBackground } from "../components/ui/stars-background";
-import { ShootingStars } from "../components/ui/shooting-stars";
 import "@fontsource-variable/inter";
 import "@fontsource/calistoga";
 import "@fontsource-variable/geist-mono";
@@ -65,8 +63,6 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
   </head>
 
   <body class="text-foreground bg-background flex flex-col min-h-screen">
-    <StarsBackground client:load className="hidden dark:block" />
-    <ShootingStars client:load className="hidden dark:block" />
     <Navbar />
     <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
       <slot />
