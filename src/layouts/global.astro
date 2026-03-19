@@ -64,9 +64,10 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
 
   <body class="text-foreground bg-background flex flex-col min-h-screen">
     <Navbar />
-    <main class="mt-24 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
+    <main class="mt-20 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
       <slot />
     </main>
+    <div class="pt-32"></div>
     <Footer />
   </body>
 </html>
