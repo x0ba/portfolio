@@ -149,10 +149,40 @@ export async function getStackItems(): Promise<SanityStackItem[]> {
   );
 }
 
+export interface SanityDoohickey {
+  _id: string;
+  name: string;
+  slug?: { current: string };
+  description?: string;
+  emoji?: string;
+  vibe?: string;
+  tags?: string[];
+  link?: string;
+  code?: string;
+  order?: number;
+}
+
 export interface SanitySiteSettings {
   _id: string;
   title?: string;
   resumeUrl?: string;
+}
+
+export async function getDoohickeys(): Promise<SanityDoohickey[]> {
+  return await sanityClient.fetch(
+    `*[_type == "doohickey"] | order(order asc, _createdAt desc) {
+      _id,
+      name,
+      slug,
+      description,
+      emoji,
+      vibe,
+      tags,
+      link,
+      code,
+      order
+    }`
+  );
 }
 
 export async function getSiteSettings(): Promise<SanitySiteSettings | null> {

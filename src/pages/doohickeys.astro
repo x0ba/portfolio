@@ -1,0 +1,184 @@
+---
+import GlobalLayout from "../layouts/global.astro";
+import { getDoohickeys } from "@/lib/sanity";
+import { ExternalLink, Github, Wrench } from "@lucide/astro";
+
+const doohickeys = await getDoohickeys();
+
+const vibeConfig: Record<string, { label: string; bg: string; fg: string }> = {
+  "works-probably": {
+    label: "works, probably",
+    bg: "oklch(0.89 0.15 145)",
+    fg: "oklch(0.30 0.10 145)",
+  },
+  "surprisingly-useful": {
+    label: "surprisingly useful",
+    bg: "oklch(0.88 0.14 85)",
+    fg: "oklch(0.35 0.10 85)",
+  },
+  "use-at-own-risk": {
+    label: "use at own risk",
+    bg: "oklch(0.85 0.18 30)",
+    fg: "oklch(0.35 0.14 30)",
+  },
+  "its-a-vibe": {
+    label: "it's a vibe",
+    bg: "oklch(0.85 0.17 310)",
+    fg: "oklch(0.35 0.14 310)",
+  },
+  "abandoned-but-loved": {
+    label: "abandoned but loved",
+    bg: "oklch(0.90 0.04 285)",
+    fg: "oklch(0.40 0.04 285)",
+  },
+};
+
+const rotations = [
+  "-1.2deg",
+  "0.8deg",
+  "-0.5deg",
+  "1.5deg",
+  "-0.9deg",
+  "0.3deg",
+  "-1.8deg",
+  "1.1deg",
+  "0.6deg",
+  "-0.4deg",
+  "1.9deg",
+  "-1.4deg",
+];
+---
+
+<GlobalLayout
+  title="Doohickeys | Daniel Xu"
+  description="A collection of small, weird, low-stakes things I made."
+>
+  <div class="flex flex-col gap-8">
+    <!-- Header -->
+    <div class="flex flex-col gap-3">
+      <h1 class="font-mono text-2xl sm:text-3xl font-bold tracking-tight">
+        doohickeys<span class="animate-pulse">_</span>
+      </h1>
+      <p class="font-mono text-sm text-muted-foreground leading-relaxed max-w-lg">
+        Small things I built at weird hours for no particular reason.
+        Low-effort, low-stakes, possibly useful. No promises.
+      </p>
+      <div
+        class="border-b border-dashed border-muted-foreground/30 mt-1"
+        aria-hidden="true"
+      >
+      </div>
+    </div>
+
+    <!-- Doohickey Cards -->
+    {
+      doohickeys.length > 0 ? (
+        <div class="columns-1 sm:columns-2 gap-4 space-y-4">
+          {doohickeys.map((d, i) => {
+            const rotation = rotations[i % rotations.length];
+            const vibe = d.vibe ? vibeConfig[d.vibe] : null;
+
+            return (
+              <div
+                class="break-inside-avoid group relative border-2 border-dashed border-muted-foreground/20 rounded-sm bg-card p-4 transition-all duration-300 hover:border-muted-foreground/50 hover:-translate-y-0.5 hover:shadow-md"
+                style={`transform: rotate(${rotation});`}
+              >
+                {/* Emoji */}
+                <div class="text-3xl mb-2 transition-transform duration-300 group-hover:scale-110 inline-block">
+                  {d.emoji || "~"}
+                </div>
+
+                {/* Name */}
+                <h2 class="font-mono font-bold text-base text-card-foreground">
+                  {d.name}
+                </h2>
+
+                {/* Description */}
+                {d.description && (
+                  <p class="font-mono text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                    {d.description}
+                  </p>
+                )}
+
+                {/* Vibe badge */}
+                {vibe && (
+                  <span
+                    class="inline-block font-mono text-[10px] font-semibold tracking-wide uppercase mt-3 px-2 py-0.5 rounded-sm"
+                    style={`background: ${vibe.bg}; color: ${vibe.fg};`}
+                  >
+                    {vibe.label}
+                  </span>
+                )}
+
+                {/* Tags */}
+                {d.tags && d.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 mt-2.5">
+                    {d.tags.map((tag) => (
+                      <span class="font-mono text-[10px] text-muted-foreground bg-secondary px-1.5 py-0.5 rounded-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Links */}
+                {(d.link || d.code) && (
+                  <div class="flex items-center gap-3 mt-3 pt-2.5 border-t border-dashed border-muted-foreground/15">
+                    {d.link && (
+                      <a
+                        href={d.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <ExternalLink class="w-3 h-3" />
+                        try it
+                      </a>
+                    )}
+                    {d.code && (
+                      <a
+                        href={d.code}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Github class="w-3 h-3" />
+                        source
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div class="flex flex-col items-center justify-center py-20 gap-4">
+          <Wrench
+            class="w-10 h-10 text-muted-foreground/40"
+            strokeWidth={1.5}
+          />
+          <div class="text-center">
+            <p class="font-mono text-sm text-muted-foreground">
+              nothing here yet.
+            </p>
+            <p class="font-mono text-xs text-muted-foreground/60 mt-1">
+              check back after the next 2am coding session.
+            </p>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</GlobalLayout>
+
+<style>
+  .break-inside-avoid {
+    break-inside: avoid;
+  }
+  @media (hover: hover) {
+    .group:hover {
+      transform: rotate(0deg) !important;
+    }
+  }
+</style>
