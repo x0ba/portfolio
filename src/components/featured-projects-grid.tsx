@@ -1,14 +1,9 @@
 import { useEffect, useState, type MouseEvent } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import ProjectDetailContent, {
   type ProjectWithOptimizedImage,
 } from "@/components/project-detail-content";
-import {
-  isRouteableProject,
-  type SanityCategory,
-  type SanityProject,
-} from "@/lib/sanity";
+import { isRouteableProject, type SanityProject } from "@/lib/sanity";
 import { SiGithub } from "react-icons/si";
 import { RiExternalLinkFill } from "react-icons/ri";
 
@@ -16,9 +11,8 @@ interface ProjectWithOptionalSlug extends SanityProject {
   optimizedImageUrl: string | null;
 }
 
-interface ProjectTabsProps {
+interface FeaturedProjectsGridProps {
   projects: ProjectWithOptionalSlug[];
-  categories: SanityCategory[];
   basePath?: string;
 }
 
@@ -161,51 +155,10 @@ function ProjectCard({
   );
 }
 
-function ProjectGrid({
+export default function FeaturedProjectsGrid({
   projects,
-  basePath,
-  onProjectNavigate,
-}: {
-  projects: ProjectWithOptionalSlug[];
-  basePath: string;
-  onProjectNavigate: (
-    project: ProjectWithOptimizedImage,
-    event: MouseEvent<HTMLAnchorElement>,
-  ) => void;
-}) {
-  if (projects.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground py-8 text-center">
-        No projects in this category.
-      </p>
-    );
-  }
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {projects.map((project) => {
-        if (!isRouteableProjectWithImage(project)) {
-          return <ProjectCard key={project._id} project={project} />;
-        }
-
-        return (
-          <ProjectCard
-            key={project._id}
-            project={project}
-            href={getProjectPath(basePath, project.slug.current)}
-            onNavigate={(event) => onProjectNavigate(project, event)}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-export default function ProjectTabs({
-  projects,
-  categories,
   basePath = "/projects",
-}: ProjectTabsProps) {
+}: FeaturedProjectsGridProps) {
   const normalizedBasePath = normalizeBasePath(basePath);
   const routeableProjects = projects.filter(isRouteableProjectWithImage);
   const routeableProjectsBySlug = new Map(
@@ -282,35 +235,22 @@ export default function ProjectTabs({
 
   return (
     <>
-      <Tabs defaultValue="all" className="w-full flex flex-col gap-5">
-        <TabsList className="w-full">
-          <TabsTrigger value="all">All</TabsTrigger>
-          {categories.map((cat) => (
-            <TabsTrigger key={cat._id} value={cat.slug.current}>
-              {cat.title}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <TabsContent value="all">
-          <ProjectGrid
-            projects={projects}
-            basePath={normalizedBasePath}
-            onProjectNavigate={handleProjectNavigate}
-          />
-        </TabsContent>
-        {categories.map((cat) => (
-          <TabsContent key={cat._id} value={cat.slug.current}>
-            <ProjectGrid
-              projects={projects.filter(
-                (project) =>
-                  project.category?.slug?.current === cat.slug.current,
-              )}
-              basePath={normalizedBasePath}
-              onProjectNavigate={handleProjectNavigate}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {projects.map((project) => {
+          if (!isRouteableProjectWithImage(project)) {
+            return <ProjectCard key={project._id} project={project} />;
+          }
+
+          return (
+            <ProjectCard
+              key={project._id}
+              project={project}
+              href={getProjectPath(normalizedBasePath, project.slug.current)}
+              onNavigate={(event) => handleProjectNavigate(project, event)}
             />
-          </TabsContent>
-        ))}
-      </Tabs>
+          );
+        })}
+      </div>
 
       {selectedProject && (
         <Dialog open={!!selectedProject} onOpenChange={handleDialogOpenChange}>

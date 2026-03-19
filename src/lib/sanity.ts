@@ -29,6 +29,18 @@ export interface SanityProject {
   code?: string;
 }
 
+export interface RouteableSanityProject extends SanityProject {
+  slug: { current: string };
+}
+
+export function isRouteableProject(
+  project: SanityProject,
+): project is RouteableSanityProject {
+  return (
+    typeof project.slug?.current === "string" && project.slug.current.length > 0
+  );
+}
+
 export interface SanityExperience {
   _id: string;
   company: string;
@@ -64,7 +76,7 @@ export async function getCategories(): Promise<SanityCategory[]> {
       title,
       slug,
       order
-    }`
+    }`,
   );
 }
 
@@ -85,7 +97,43 @@ export async function getProjects(): Promise<SanityProject[]> {
       image,
       link,
       code
-    }`
+    }`,
+  );
+}
+
+export async function getProjectSlugs(): Promise<string[]> {
+  const projects = await sanityClient.fetch<{ slug?: { current?: string } }[]>(
+    `*[_type == "project" && defined(slug.current)] {
+      slug
+    }`,
+  );
+
+  return projects
+    .map((project) => project.slug?.current)
+    .filter(
+      (slug): slug is string => typeof slug === "string" && slug.length > 0,
+    );
+}
+
+export async function getProjectBySlug(slug: string) {
+  return await sanityClient.fetch<SanityProject | null>(
+    `*[_type == "project" && slug.current == $slug][0] {
+      _id,
+      name,
+      slug,
+      description,
+      category->{
+        _id,
+        title,
+        slug
+      },
+      featured,
+      tags,
+      image,
+      link,
+      code
+    }`,
+    { slug },
   );
 }
 
@@ -106,7 +154,7 @@ export async function getFeaturedProjects(): Promise<SanityProject[]> {
       image,
       link,
       code
-    }`
+    }`,
   );
 }
 
@@ -120,7 +168,7 @@ export async function getExperiences(): Promise<SanityExperience[]> {
       endYear,
       description,
       order
-    }`
+    }`,
   );
 }
 
@@ -134,7 +182,7 @@ export async function getEducation(): Promise<SanityEducation[]> {
       endYear,
       description,
       order
-    }`
+    }`,
   );
 }
 
@@ -145,7 +193,7 @@ export async function getStackItems(): Promise<SanityStackItem[]> {
       name,
       iconName,
       order
-    }`
+    }`,
   );
 }
 
@@ -181,7 +229,7 @@ export async function getDoohickeys(): Promise<SanityDoohickey[]> {
       link,
       code,
       order
-    }`
+    }`,
   );
 }
 
@@ -191,7 +239,7 @@ export async function getSiteSettings(): Promise<SanitySiteSettings | null> {
       _id,
       title,
       "resumeUrl": resume.asset->url
-    }`
+    }`,
   );
 }
 
