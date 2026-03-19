@@ -8,9 +8,7 @@ interface StackProps {
 export default function Stack({ items }: StackProps) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-xl sm:text-2xl font-serif">
-        My Favorite Technologies
-      </div>
+      <div className="text-xl sm:text-2xl">My Favorite Technologies</div>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <div

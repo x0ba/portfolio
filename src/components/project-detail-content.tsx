@@ -38,7 +38,7 @@ export default function ProjectDetailContent({
       )}
       <div className="p-5 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
-          <Title className="text-xl font-semibold text-foreground font-serif">
+          <Title className="text-xl font-semibold text-foreground">
             {project.name}
           </Title>
           <div className="flex items-center gap-3 flex-none pt-1">

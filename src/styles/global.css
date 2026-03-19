@@ -4,9 +4,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-serif: "Calistoga", serif;
-  --font-mono: "Geist Mono", monospace;
+  --font-sans: "Fraunces Variable", serif;
+  --font-serif: "Fraunces Variable", serif;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Mono", "Source Code Pro", "Fira Mono",
+    "Droid Sans Mono", "Consolas", "Courier New", monospace;
 }
 
 @theme inline {
@@ -127,7 +130,14 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-serif);
     position: relative;
+  }
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
   }
   body::before {
     content: "";

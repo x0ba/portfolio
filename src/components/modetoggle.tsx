@@ -18,7 +18,7 @@ export function ModeToggle() {
     const isEffectiveDark = theme === "dark";
 
     document.documentElement.classList[isEffectiveDark ? "add" : "remove"](
-      "dark"
+      "dark",
     );
 
     // Only persist to localStorage if this was a user-initiated change

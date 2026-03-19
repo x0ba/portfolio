@@ -24,7 +24,8 @@ export const doohickey = defineType({
       name: "description",
       title: "Description",
       type: "text",
-      description: "A short, casual blurb about what this thing does (or doesn't do)",
+      description:
+        "A short, casual blurb about what this thing does (or doesn't do)",
     }),
     defineField({
       name: "emoji",

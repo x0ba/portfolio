@@ -1,13 +1,13 @@
-import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { X } from "lucide-react"
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const Dialog = DialogPrimitive.Root
-const DialogTrigger = DialogPrimitive.Trigger
-const DialogPortal = DialogPrimitive.Portal
-const DialogClose = DialogPrimitive.Close
+const Dialog = DialogPrimitive.Root;
+const DialogTrigger = DialogPrimitive.Trigger;
+const DialogPortal = DialogPrimitive.Portal;
+const DialogClose = DialogPrimitive.Close;
 
 function DialogOverlay({
   className,
@@ -19,11 +19,11 @@ function DialogOverlay({
         "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function DialogContent({
@@ -43,7 +43,7 @@ function DialogContent({
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
           "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           "duration-150",
-          className
+          className,
         )}
         {...props}
       >
@@ -54,7 +54,7 @@ function DialogContent({
             "inline-flex items-center justify-center rounded-full",
             "size-8 bg-background/80 backdrop-blur-sm border border-border",
             "text-muted-foreground hover:text-foreground",
-            "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           )}
         >
           <X className="size-4" />
@@ -62,7 +62,7 @@ function DialogContent({
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>
-  )
+  );
 }
 
 export {
@@ -72,4 +72,4 @@ export {
   DialogOverlay,
   DialogContent,
   DialogClose,
-}
+};
