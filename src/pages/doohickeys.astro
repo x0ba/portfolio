@@ -232,24 +232,11 @@ const offsets = [
 
   function initDoohickeyTilt() {
     const cards = document.querySelectorAll<HTMLElement>(".doohickey-card");
-    const cleanups: (() => void)[] = [];
 
     cards.forEach((card) => {
-      if (document.documentElement.dataset.routeTransition === "active") {
-        card.style.transition = "";
-        card.style.transform = "";
-      }
-      const cleanup = attachTilt(card, 4);
-      cleanups.push(cleanup);
+      attachTilt(card, 4);
     });
-
-    return () => cleanups.forEach((fn) => fn());
   }
 
-  let cleanup = initDoohickeyTilt();
-
-  document.addEventListener("astro:page-load", () => {
-    cleanup();
-    cleanup = initDoohickeyTilt();
-  });
+  initDoohickeyTilt();
 </script>

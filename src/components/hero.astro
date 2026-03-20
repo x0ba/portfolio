@@ -70,8 +70,6 @@ import CopyEmail from "@/components/copy-email";
   function initHeroAvatar() {
     const el = document.getElementById("hero-avatar");
     if (!el) return () => {};
-    const skipTransitionReset =
-      document.documentElement.dataset.routeTransition === "active";
 
     // 1. Tilt effect
     let cleanupTilt = attachTilt(el, 8);
@@ -105,16 +103,9 @@ import CopyEmail from "@/components/copy-email";
       el.removeEventListener("mouseenter", showRing);
       el.removeEventListener("mouseleave", hideRing);
       el.removeEventListener("click", handleClick);
-      if (!skipTransitionReset) {
-        el.style.transition = "";
-      }
+      el.style.transition = "";
     };
   }
 
-  let cleanup = initHeroAvatar();
-
-  document.addEventListener("astro:page-load", () => {
-    cleanup();
-    cleanup = initHeroAvatar();
-  });
+  initHeroAvatar();
 </script>

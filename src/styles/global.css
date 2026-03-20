@@ -176,23 +176,6 @@
   }
 }
 
-@keyframes page-enter {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-html:not(.theme-transitioning)::view-transition-old(root) {
-  animation: none;
-}
-
-html:not(.theme-transitioning)::view-transition-new(root) {
-  animation: page-enter 120ms ease-out;
-}
-
 /* Scroll animations — progressive enhancement */
 @media (prefers-reduced-motion: no-preference) {
   [data-scroll-animate] > * {
@@ -234,11 +217,6 @@ html:not(.theme-transitioning)::view-transition-new(root) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
-  }
-
   .hero-avatar-ring {
     animation: none;
   }
@@ -356,7 +334,7 @@ html:not(.theme-transitioning)::view-transition-new(root) {
   }
 }
 
-/* Theme ripple transition — scoped to avoid breaking Astro page transitions */
+/* Theme ripple transition */
 html.theme-transitioning::view-transition-old(root),
 html.theme-transitioning::view-transition-new(root) {
   animation: none;

@@ -46,13 +46,7 @@ export default function CommandPalette() {
   const navigateTo = useCallback(
     (path: string) => {
       runAndClose(() => {
-        // Use Astro view transitions navigation if available
-        const nav = (window as any).navigation;
-        if (typeof (window as any).__astro_navigate === "function") {
-          (window as any).__astro_navigate(path);
-        } else {
-          window.location.href = path;
-        }
+        window.location.href = path;
       });
     },
     [runAndClose],

@@ -15,8 +15,6 @@ const { stagger = 75 } = Astro.props;
     const elements = document.querySelectorAll<HTMLElement>(
       "[data-scroll-animate]",
     );
-    const skipEntrance =
-      document.documentElement.dataset.routeTransition === "active";
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,12 +29,6 @@ const { stagger = 75 } = Astro.props;
             child.style.transitionDelay = `${i * stagger}ms`;
           });
 
-          if (skipEntrance) {
-            el.classList.add("scroll-visible");
-            observer.unobserve(el);
-            return;
-          }
-
           // Force reflow so delay applies before class
           el.offsetHeight;
           el.classList.add("scroll-visible");
@@ -47,18 +39,11 @@ const { stagger = 75 } = Astro.props;
     );
 
     elements.forEach((el) => {
-      if (skipEntrance) {
-        el.classList.add("scroll-visible");
-        return;
-      }
-
       if (!el.classList.contains("scroll-visible")) {
         observer.observe(el);
       }
     });
   }
 
-  // Run on initial load and after view transitions
   initScrollAnimations();
-  document.addEventListener("astro:page-load", initScrollAnimations);
 </script>

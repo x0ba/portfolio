@@ -4,7 +4,6 @@ import Navbar from "../components/navbar.astro";
 import Footer from "../components/footer.astro";
 import "@fontsource-variable/fraunces";
 import Analytics from "@vercel/analytics/astro";
-import { ViewTransitions } from "astro:transitions";
 import { getImage } from "astro:assets";
 import heroImage from "../images/hero.webp";
 import CommandPalette from "../components/command-palette";
@@ -50,8 +49,6 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
     <meta property="twitter:image" content={socialImageURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <ViewTransitions />
-
     <script is:inline>
       const syncTheme = () => {
         const theme = localStorage.getItem("theme");
@@ -63,17 +60,6 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
       };
 
       syncTheme();
-
-      document.addEventListener("astro:after-swap", () => {
-        syncTheme();
-        document.documentElement.dataset.routeTransition = "active";
-      });
-
-      document.addEventListener("astro:page-load", () => {
-        requestAnimationFrame(() => {
-          delete document.documentElement.dataset.routeTransition;
-        });
-      });
     </script>
 
     <Analytics />
@@ -81,7 +67,7 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
 
   <body class="text-foreground bg-background flex flex-col min-h-screen">
     <Navbar />
-    <div transition:persist="command-palette" style="z-index: 999; position: relative;">
+    <div style="z-index: 999; position: relative;">
       <CommandPalette client:idle />
     </div>
     <main class="mt-20 py-4 w-full max-w-3xl mx-auto px-4 flex-1">
