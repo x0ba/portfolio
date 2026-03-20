@@ -7,13 +7,23 @@ import CopyEmail from "@/components/copy-email";
 
 <div class="flex flex-col gap-4">
   <div class="flex items-center gap-5">
-    <Image
-      class="rounded-2xl w-20 h-20 sm:w-24 sm:h-24 object-cover flex-none"
-      src={heroImage}
-      alt="Daniel Xu"
-      quality={100}
-      loading="eager"
-    />
+    <div
+      id="hero-avatar"
+      class="relative flex-none w-20 h-20 sm:w-24 sm:h-24 rounded-2xl cursor-pointer"
+      style="perspective: 800px;"
+    >
+      <div
+        class="hero-avatar-ring absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-300"
+      >
+      </div>
+      <Image
+        class="rounded-2xl w-full h-full object-cover relative z-[1]"
+        src={heroImage}
+        alt="Daniel Xu"
+        quality={100}
+        loading="eager"
+      />
+    </div>
     <div class="flex flex-col gap-1.5">
       <h1 class="text-3xl sm:text-4xl leading-tight">Daniel Xu</h1>
       <p class="text-sm sm:text-base text-muted-foreground">
@@ -53,3 +63,58 @@ import CopyEmail from "@/components/copy-email";
     </div>
   </div>
 </div>
+
+<script>
+  import { attachTilt } from "@/lib/tilt";
+
+  function initHeroAvatar() {
+    const el = document.getElementById("hero-avatar");
+    if (!el) return () => {};
+    const skipTransitionReset =
+      document.documentElement.dataset.routeTransition === "active";
+
+    // 1. Tilt effect
+    let cleanupTilt = attachTilt(el, 8);
+
+    // 2. Hover ring visibility
+    const ring = el.querySelector<HTMLElement>(".hero-avatar-ring");
+    const showRing = () => ring?.classList.replace("opacity-0", "opacity-100");
+    const hideRing = () => ring?.classList.replace("opacity-100", "opacity-0");
+    el.addEventListener("mouseenter", showRing);
+    el.addEventListener("mouseleave", hideRing);
+
+    // 3. Click-to-flip easter egg
+    let flipping = false;
+    const handleClick = () => {
+      if (flipping) return;
+      flipping = true;
+      cleanupTilt(); // pause tilt during flip
+      el.style.transition = "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
+      el.style.transform = "perspective(800px) rotateY(360deg)";
+      setTimeout(() => {
+        el.style.transition = "transform 0.3s ease";
+        el.style.transform = "";
+        cleanupTilt = attachTilt(el, 8); // resume tilt
+        flipping = false;
+      }, 650);
+    };
+    el.addEventListener("click", handleClick);
+
+    return () => {
+      cleanupTilt();
+      el.removeEventListener("mouseenter", showRing);
+      el.removeEventListener("mouseleave", hideRing);
+      el.removeEventListener("click", handleClick);
+      if (!skipTransitionReset) {
+        el.style.transition = "";
+      }
+    };
+  }
+
+  let cleanup = initHeroAvatar();
+
+  document.addEventListener("astro:page-load", () => {
+    cleanup();
+    cleanup = initHeroAvatar();
+  });
+</script>

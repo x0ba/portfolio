@@ -10,7 +10,6 @@ import {
   Mail,
   Github,
   Linkedin,
-  Search,
 } from "lucide-react";
 import { toggleThemeWithRipple } from "@/lib/theme-transition";
 

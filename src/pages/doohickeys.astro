@@ -235,6 +235,10 @@ const offsets = [
     const cleanups: (() => void)[] = [];
 
     cards.forEach((card) => {
+      if (document.documentElement.dataset.routeTransition === "active") {
+        card.style.transition = "";
+        card.style.transform = "";
+      }
       const cleanup = attachTilt(card, 4);
       cleanups.push(cleanup);
     });

@@ -176,6 +176,23 @@
   }
 }
 
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html:not(.theme-transitioning)::view-transition-old(root) {
+  animation: none;
+}
+
+html:not(.theme-transitioning)::view-transition-new(root) {
+  animation: page-enter 120ms ease-out;
+}
+
 /* Scroll animations — progressive enhancement */
 @media (prefers-reduced-motion: no-preference) {
   [data-scroll-animate] > * {
@@ -188,6 +205,42 @@
   [data-scroll-animate].scroll-visible > * {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Hero avatar gradient ring */
+@property --hero-ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.hero-avatar-ring {
+  background: conic-gradient(
+    from var(--hero-ring-angle, 0deg),
+    oklch(0.6 0.15 250),
+    oklch(0.7 0.15 310),
+    oklch(0.65 0.15 30),
+    oklch(0.6 0.15 250)
+  );
+  border-radius: inherit;
+  animation: hero-ring-spin 4s linear infinite;
+}
+
+@keyframes hero-ring-spin {
+  to {
+    --hero-ring-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  .hero-avatar-ring {
+    animation: none;
   }
 }
 
