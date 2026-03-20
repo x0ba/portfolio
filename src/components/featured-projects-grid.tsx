@@ -6,6 +6,7 @@ import ProjectDetailContent, {
 import { isRouteableProject, type SanityProject } from "@/lib/sanity";
 import { SiGithub } from "react-icons/si";
 import { RiExternalLinkFill } from "react-icons/ri";
+import { useTilt } from "@/lib/tilt";
 
 interface ProjectWithOptionalSlug extends SanityProject {
   optimizedImageUrl: string | null;
@@ -76,8 +77,11 @@ function ProjectCard({
   href?: string;
   onNavigate?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) {
+  const tiltRef = useTilt<HTMLDivElement>(6);
+
   return (
     <div
+      ref={tiltRef}
       className={`group relative rounded-xl border border-border overflow-hidden bg-card hover:border-foreground/20 transition-all duration-300 ${
         href ? "cursor-pointer" : ""
       }`}

@@ -1,5 +1,6 @@
 ---
 import GlobalLayout from "../layouts/global.astro";
+import ScrollAnimate from "../components/scroll-animate.astro";
 import { getDoohickeys } from "@/lib/sanity";
 import { ExternalLink, Github, Wrench } from "@lucide/astro";
 
@@ -88,7 +89,7 @@ const offsets = [
     <!-- Doohickey Cards -->
     {
       doohickeys.length > 0 ? (
-        <div class="doohickeys-grid">
+        <ScrollAnimate stagger={75}><div class="doohickeys-grid">
           {doohickeys.map((d, i) => {
             const rotation = rotations[i % rotations.length];
             const offset = offsets[i % offsets.length];
@@ -172,7 +173,7 @@ const offsets = [
               </div>
             );
           })}
-        </div>
+        </div></ScrollAnimate>
       ) : (
         <div class="flex flex-col items-center justify-center py-20 gap-4">
           <Wrench
@@ -210,12 +211,6 @@ const offsets = [
     transform-origin: center top;
   }
 
-  @media (hover: hover) {
-    .doohickey-card:hover {
-      transform: translateY(-0.125rem) rotate(0deg);
-    }
-  }
-
   @media (min-width: 640px) {
     .doohickeys-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -225,4 +220,32 @@ const offsets = [
       margin-top: var(--card-offset, 0rem);
     }
   }
+  @media (hover: hover) {
+    .doohickey-card:hover {
+      transform: translateY(-0.125rem) rotate(0deg);
+    }
+  }
 </style>
+
+<script>
+  import { attachTilt } from "@/lib/tilt";
+
+  function initDoohickeyTilt() {
+    const cards = document.querySelectorAll<HTMLElement>(".doohickey-card");
+    const cleanups: (() => void)[] = [];
+
+    cards.forEach((card) => {
+      const cleanup = attachTilt(card, 4);
+      cleanups.push(cleanup);
+    });
+
+    return () => cleanups.forEach((fn) => fn());
+  }
+
+  let cleanup = initDoohickeyTilt();
+
+  document.addEventListener("astro:page-load", () => {
+    cleanup();
+    cleanup = initDoohickeyTilt();
+  });
+</script>

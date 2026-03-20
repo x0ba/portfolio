@@ -2,39 +2,27 @@ import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { toggleThemeWithRipple } from "@/lib/theme-transition";
 
 export function ModeToggle() {
-  const [theme, setThemeState] = React.useState<"theme-light" | "dark">("dark");
-  const isUserAction = React.useRef(false);
+  const [isDark, setIsDark] = React.useState(true);
 
-  // On mount, sync React state with the actual DOM state (set by the inline script)
+  // Sync React state with actual DOM state on mount
   React.useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains("dark");
-    setThemeState(isDarkMode ? "dark" : "theme-light");
+    setIsDark(document.documentElement.classList.contains("dark"));
   }, []);
 
-  // Update DOM and localStorage, but only write to storage on user actions
-  React.useEffect(() => {
-    const isEffectiveDark = theme === "dark";
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
 
-    document.documentElement.classList[isEffectiveDark ? "add" : "remove"](
-      "dark",
-    );
-
-    // Only persist to localStorage if this was a user-initiated change
-    if (isUserAction.current) {
-      localStorage.setItem("theme", isEffectiveDark ? "dark" : "light");
-      isUserAction.current = false;
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    isUserAction.current = true;
-    setThemeState((prev) => (prev === "dark" ? "theme-light" : "dark"));
+    toggleThemeWithRipple(x, y);
+    setIsDark((prev) => !prev);
   };
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
+    <Button variant="outline" size="icon" onClick={handleClick}>
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       <span className="sr-only">Toggle theme</span>

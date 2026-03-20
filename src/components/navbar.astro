@@ -3,7 +3,7 @@ import Logo from "@/images/signature.svg";
 import { ModeToggle } from "./modetoggle";
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 pt-5 pb-4">
+<nav class="fixed top-0 left-0 right-0 z-50 pt-5 pb-4" transition:persist>
   <div class="w-full max-w-3xl mx-auto px-4 flex items-center justify-between">
     <div class="flex items-center md:gap-5 gap-3">
       <Logo
@@ -25,7 +25,14 @@ import { ModeToggle } from "./modetoggle";
         href="/doohickeys">Doohickeys</a
       >
     </div>
-    <div class="flex gap-5 md:gap-10">
+    <div class="flex items-center gap-3 md:gap-5">
+      <button
+        onclick="document.dispatchEvent(new CustomEvent('open-command-palette'))"
+        class="hidden sm:flex items-center gap-1.5 text-xs text-muted-foreground border border-border rounded-md px-2 py-1 hover:text-foreground hover:border-foreground/20 transition-colors cursor-pointer"
+        aria-label="Open command palette"
+      >
+        <kbd class="font-mono text-[10px]">⌘K</kbd>
+      </button>
       <ModeToggle client:load />
     </div>
   </div>

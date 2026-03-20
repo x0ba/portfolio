@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import heroImage from "@/images/hero.webp";
-import { FileUser, Linkedin, Github, Mail } from "@lucide/astro";
+import { FileUser, Linkedin, Github } from "@lucide/astro";
+import CopyEmail from "@/components/copy-email";
 ---
 
 <div class="flex flex-col gap-4">
@@ -43,12 +44,12 @@ import { FileUser, Linkedin, Github, Mail } from "@lucide/astro";
         class="text-muted-foreground hover:text-foreground transition-colors"
         target="_blank"><Github class="w-[18px] h-[18px]" /></a
       >
-      <a
-        href="mailto:hi@danielx.me"
-        aria-label="Email"
-        class="text-muted-foreground hover:text-foreground transition-colors"
-        target="_blank"><Mail class="w-[18px] h-[18px]" /></a
-      >
+      <CopyEmail
+        email="hi@danielx.me"
+        iconSize={18}
+        className="text-muted-foreground hover:text-foreground transition-colors"
+        client:load
+      />
     </div>
   </div>
 </div>
