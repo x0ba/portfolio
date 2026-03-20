@@ -16,13 +16,15 @@ import CopyEmail from "@/components/copy-email";
         class="hero-avatar-ring absolute -inset-[2px] rounded-2xl opacity-0 transition-opacity duration-300"
       >
       </div>
-      <Image
-        class="rounded-2xl w-full h-full object-cover relative z-[1]"
-        src={heroImage}
-        alt="Daniel Xu"
-        quality={100}
-        loading="eager"
-      />
+      <div id="hero-avatar-card" class="hero-avatar-card relative z-[1] w-full h-full">
+        <Image
+          class="hero-avatar-image rounded-2xl w-full h-full object-cover"
+          src={heroImage}
+          alt="Daniel Xu"
+          quality={100}
+          loading="eager"
+        />
+      </div>
     </div>
     <div class="flex flex-col gap-1.5">
       <h1 class="text-3xl sm:text-4xl leading-tight">Daniel Xu</h1>
@@ -70,6 +72,11 @@ import CopyEmail from "@/components/copy-email";
   function initHeroAvatar() {
     const el = document.getElementById("hero-avatar");
     if (!el) return () => {};
+    const card = el.querySelector<HTMLElement>("#hero-avatar-card");
+    if (!card) return () => {};
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
 
     // 1. Tilt effect
     let cleanupTilt = attachTilt(el, 8);
@@ -83,27 +90,37 @@ import CopyEmail from "@/components/copy-email";
 
     // 3. Click-to-flip easter egg
     let flipping = false;
+    const handleFlipEnd = (event: AnimationEvent) => {
+      if (event.target !== card || event.animationName !== "hero-avatar-flip") {
+        return;
+      }
+
+      card.classList.remove("hero-avatar-card--flipping");
+      cleanupTilt = attachTilt(el, 8); // resume tilt
+      flipping = false;
+    };
+
     const handleClick = () => {
-      if (flipping) return;
+      if (flipping || prefersReducedMotion.matches) return;
+
       flipping = true;
       cleanupTilt(); // pause tilt during flip
-      el.style.transition = "transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
-      el.style.transform = "perspective(800px) rotateY(360deg)";
-      setTimeout(() => {
-        el.style.transition = "transform 0.3s ease";
-        el.style.transform = "";
-        cleanupTilt = attachTilt(el, 8); // resume tilt
-        flipping = false;
-      }, 650);
+      card.classList.remove("hero-avatar-card--flipping");
+      // Force a reflow so the animation reliably restarts every click.
+      void card.offsetWidth;
+      card.classList.add("hero-avatar-card--flipping");
     };
+
+    card.addEventListener("animationend", handleFlipEnd);
     el.addEventListener("click", handleClick);
 
     return () => {
       cleanupTilt();
+      card.removeEventListener("animationend", handleFlipEnd);
       el.removeEventListener("mouseenter", showRing);
       el.removeEventListener("mouseleave", hideRing);
       el.removeEventListener("click", handleClick);
-      el.style.transition = "";
+      card.classList.remove("hero-avatar-card--flipping");
     };
   }
 

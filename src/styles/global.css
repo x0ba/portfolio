@@ -210,14 +210,44 @@
   animation: hero-ring-spin 4s linear infinite;
 }
 
+.hero-avatar-card {
+  border-radius: inherit;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.hero-avatar-card--flipping {
+  animation: hero-avatar-flip 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-avatar-image {
+  backface-visibility: hidden;
+}
+
 @keyframes hero-ring-spin {
   to {
     --hero-ring-angle: 360deg;
   }
 }
 
+@keyframes hero-avatar-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-avatar-ring {
+    animation: none;
+  }
+
+  .hero-avatar-card--flipping {
     animation: none;
   }
 }
