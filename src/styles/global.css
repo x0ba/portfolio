@@ -176,21 +176,6 @@
   }
 }
 
-/* Scroll animations — progressive enhancement */
-@media (prefers-reduced-motion: no-preference) {
-  [data-scroll-animate] > * {
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.5s ease,
-      transform 0.5s ease;
-  }
-  [data-scroll-animate].scroll-visible > * {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Hero avatar gradient ring */
 @property --hero-ring-angle {
   syntax: "<angle>";
