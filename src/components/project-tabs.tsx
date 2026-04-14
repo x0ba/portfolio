@@ -1,31 +1,17 @@
 import { useEffect, useState, type MouseEvent } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SiGithub } from "react-icons/si";
+import { RiExternalLinkFill } from "react-icons/ri";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { Category } from "@/content";
 import ProjectDetailContent, {
   type ProjectWithOptimizedImage,
 } from "@/components/project-detail-content";
-import {
-  isRouteableProject,
-  type SanityCategory,
-  type SanityProject,
-} from "@/lib/sanity";
-import { SiGithub } from "react-icons/si";
-import { RiExternalLinkFill } from "react-icons/ri";
-
-interface ProjectWithOptionalSlug extends SanityProject {
-  optimizedImageUrl: string | null;
-}
 
 interface ProjectTabsProps {
-  projects: ProjectWithOptionalSlug[];
-  categories: SanityCategory[];
+  projects: ProjectWithOptimizedImage[];
+  categories: Category[];
   basePath?: string;
-}
-
-function isRouteableProjectWithImage(
-  project: ProjectWithOptionalSlug,
-): project is ProjectWithOptimizedImage {
-  return isRouteableProject(project);
 }
 
 function normalizeBasePath(basePath: string) {
@@ -78,16 +64,12 @@ function ProjectCard({
   href,
   onNavigate,
 }: {
-  project: ProjectWithOptionalSlug;
-  href?: string;
-  onNavigate?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  project: ProjectWithOptimizedImage;
+  href: string;
+  onNavigate: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) {
   return (
-    <div
-      className={`group relative rounded-xl border border-border overflow-hidden bg-card hover:border-foreground/20 transition-all duration-300 ${
-        href ? "cursor-pointer" : ""
-      }`}
-    >
+    <div className="interactive-card group relative rounded-xl border border-border overflow-hidden bg-card cursor-pointer">
       {project.optimizedImageUrl && (
         <div className="overflow-hidden">
           <img
@@ -109,7 +91,7 @@ function ProjectCard({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="interactive-icon-link text-muted-foreground hover:text-foreground"
                 aria-label={`Visit ${project.name}`}
               >
                 <RiExternalLinkFill className="w-4 h-4" />
@@ -120,7 +102,7 @@ function ProjectCard({
                 href={project.code}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="interactive-icon-link text-muted-foreground hover:text-foreground"
                 aria-label={`View ${project.name} source code`}
               >
                 <SiGithub className="w-4 h-4" />
@@ -133,7 +115,7 @@ function ProjectCard({
             {project.description}
           </p>
         )}
-        {project.tags && project.tags.length > 0 && (
+        {project.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-1">
             {project.tags.map((tag) => (
               <span
@@ -147,16 +129,14 @@ function ProjectCard({
         )}
       </div>
 
-      {href && (
-        <a
-          href={href}
-          className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          aria-label={`View ${project.name} details`}
-          onClick={onNavigate}
-        >
-          <span className="sr-only">View {project.name} details</span>
-        </a>
-      )}
+      <a
+        href={href}
+        className="absolute inset-0 z-10 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        aria-label={`View ${project.name} details`}
+        onClick={onNavigate}
+      >
+        <span className="sr-only">View {project.name} details</span>
+      </a>
     </div>
   );
 }
@@ -166,7 +146,7 @@ function ProjectGrid({
   basePath,
   onProjectNavigate,
 }: {
-  projects: ProjectWithOptionalSlug[];
+  projects: ProjectWithOptimizedImage[];
   basePath: string;
   onProjectNavigate: (
     project: ProjectWithOptimizedImage,
@@ -183,20 +163,14 @@ function ProjectGrid({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {projects.map((project) => {
-        if (!isRouteableProjectWithImage(project)) {
-          return <ProjectCard key={project._id} project={project} />;
-        }
-
-        return (
-          <ProjectCard
-            key={project._id}
-            project={project}
-            href={getProjectPath(basePath, project.slug.current)}
-            onNavigate={(event) => onProjectNavigate(project, event)}
-          />
-        );
-      })}
+      {projects.map((project) => (
+        <ProjectCard
+          key={project.slug}
+          project={project}
+          href={getProjectPath(basePath, project.slug)}
+          onNavigate={(event) => onProjectNavigate(project, event)}
+        />
+      ))}
     </div>
   );
 }
@@ -207,9 +181,8 @@ export default function ProjectTabs({
   basePath = "/projects",
 }: ProjectTabsProps) {
   const normalizedBasePath = normalizeBasePath(basePath);
-  const routeableProjects = projects.filter(isRouteableProjectWithImage);
-  const routeableProjectsBySlug = new Map(
-    routeableProjects.map((project) => [project.slug.current, project]),
+  const projectsBySlug = new Map(
+    projects.map((project) => [project.slug, project]),
   );
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string | null>(
     null,
@@ -222,7 +195,7 @@ export default function ProjectTabs({
         normalizedBasePath,
       );
 
-      if (slug && routeableProjectsBySlug.has(slug)) {
+      if (slug && projectsBySlug.has(slug)) {
         setSelectedProjectSlug(slug);
         return;
       }
@@ -239,7 +212,7 @@ export default function ProjectTabs({
   }, [normalizedBasePath, projects]);
 
   const selectedProject = selectedProjectSlug
-    ? (routeableProjectsBySlug.get(selectedProjectSlug) ?? null)
+    ? (projectsBySlug.get(selectedProjectSlug) ?? null)
     : null;
 
   const handleProjectNavigate = (
@@ -252,13 +225,13 @@ export default function ProjectTabs({
 
     event.preventDefault();
 
-    const href = getProjectPath(normalizedBasePath, project.slug.current);
+    const href = getProjectPath(normalizedBasePath, project.slug);
 
     if (window.location.pathname !== href) {
-      window.history.pushState({ projectSlug: project.slug.current }, "", href);
+      window.history.pushState({ projectSlug: project.slug }, "", href);
     }
 
-    setSelectedProjectSlug(project.slug.current);
+    setSelectedProjectSlug(project.slug);
   };
 
   const handleDialogOpenChange = (open: boolean) => {
@@ -285,9 +258,9 @@ export default function ProjectTabs({
       <Tabs defaultValue="all" className="w-full flex flex-col gap-5">
         <TabsList className="w-full">
           <TabsTrigger value="all">All</TabsTrigger>
-          {categories.map((cat) => (
-            <TabsTrigger key={cat._id} value={cat.slug.current}>
-              {cat.title}
+          {categories.map((category) => (
+            <TabsTrigger key={category.slug} value={category.slug}>
+              {category.title}
             </TabsTrigger>
           ))}
         </TabsList>
@@ -298,12 +271,11 @@ export default function ProjectTabs({
             onProjectNavigate={handleProjectNavigate}
           />
         </TabsContent>
-        {categories.map((cat) => (
-          <TabsContent key={cat._id} value={cat.slug.current}>
+        {categories.map((category) => (
+          <TabsContent key={category.slug} value={category.slug}>
             <ProjectGrid
               projects={projects.filter(
-                (project) =>
-                  project.category?.slug?.current === cat.slug.current,
+                (project) => project.category === category.slug,
               )}
               basePath={normalizedBasePath}
               onProjectNavigate={handleProjectNavigate}

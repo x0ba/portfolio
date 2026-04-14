@@ -1,30 +1,36 @@
 ---
 import { Github, Linkedin } from "@lucide/astro";
 import CopyEmail from "@/components/copy-email";
+import { site } from "@/content";
+
+const githubUrl =
+  site.socials.find((social) => social.label === "GitHub")?.href || "#";
+const linkedinUrl =
+  site.socials.find((social) => social.label === "LinkedIn")?.href || "#";
 ---
 
 <footer class="w-full max-w-3xl mx-auto px-4 py-8 flex items-center justify-between">
   <span class="text-xs text-muted-foreground"
-    >&copy; {new Date().getFullYear()} Daniel Xu. All Rights Reserved. <br /> Made
-    With ❤️ in La Jolla, CA.</span
+    >&copy; {new Date().getFullYear()} {site.personName}. All Rights Reserved.
+    <br /> {site.footerText}</span
   >
   <div class="flex items-center gap-3">
     <a
-      href="https://www.linkedin.com/in/daniel-xu-sd"
+      href={linkedinUrl}
       aria-label="LinkedIn"
-      class="text-muted-foreground hover:text-foreground transition-colors"
+      class="interactive-icon-link text-muted-foreground hover:text-foreground"
       target="_blank"><Linkedin class="w-4 h-4" /></a
     >
     <a
-      href="https://github.com/x0ba"
+      href={githubUrl}
       aria-label="GitHub"
-      class="text-muted-foreground hover:text-foreground transition-colors"
+      class="interactive-icon-link text-muted-foreground hover:text-foreground"
       target="_blank"><Github class="w-4 h-4" /></a
     >
     <CopyEmail
-      email="hi@danielx.me"
+      email={site.email}
       iconSize={16}
-      className="text-muted-foreground hover:text-foreground transition-colors"
+      className="interactive-icon-link text-muted-foreground hover:text-foreground"
       client:load
     />
   </div>

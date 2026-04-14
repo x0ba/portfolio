@@ -10,7 +10,7 @@ interface CopyEmailProps {
 export default function CopyEmail({
   email,
   iconSize = 18,
-  className = "text-muted-foreground hover:text-foreground transition-colors",
+  className = "interactive-icon-link text-muted-foreground hover:text-foreground",
 }: CopyEmailProps) {
   const [copied, setCopied] = useState(false);
 

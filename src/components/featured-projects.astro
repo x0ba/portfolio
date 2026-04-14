@@ -1,20 +1,15 @@
 ---
 import { getImage } from "astro:assets";
-import FeaturedProjectsGrid from "@/components/featured-projects-grid";
 import { ArrowRight } from "lucide-react";
-import { getFeaturedProjects, urlFor } from "@/lib/sanity";
+import FeaturedProjectsGrid from "@/components/featured-projects-grid";
+import { projects } from "@/content";
 
-const projects = await getFeaturedProjects();
+const featuredProjects = projects.filter((project) => project.featured);
 
 const projectsWithOptimizedImages = await Promise.all(
-  projects.map(async (project) => {
-    if (!project.image) {
-      return { ...project, optimizedImageUrl: null };
-    }
-
-    const sanityUrl = urlFor(project.image).width(1600).height(900).url();
+  featuredProjects.map(async (project) => {
     const optimizedImage = await getImage({
-      src: sanityUrl,
+      src: project.image,
       width: 1600,
       height: 900,
     });
@@ -29,7 +24,7 @@ const projectsWithOptimizedImages = await Promise.all(
     <h2 class="text-xl sm:text-2xl">Projects</h2>
     <a
       href="/projects"
-      class="text-muted-foreground flex items-center gap-1 text-sm hover:text-foreground transition-colors"
+      class="interactive-link text-muted-foreground flex items-center gap-1 text-sm hover:text-foreground"
     >
       See all
       <ArrowRight width={16} height={16} />

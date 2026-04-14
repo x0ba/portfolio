@@ -1,25 +1,25 @@
 ---
-import { getExperiences } from "@/lib/sanity";
-
-const experiences = await getExperiences();
+import { experiences } from "@/content";
 ---
 
 <div class="flex flex-col gap-3">
   <h2 class="text-xl sm:text-2xl">Experience</h2>
   <div class="flex flex-col divide-y divide-border">
     {
-      experiences.map((exp) => (
+      experiences.map((experience) => (
         <div class="py-4 first:pt-0 last:pb-0">
           <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-            <h3 class="font-medium text-foreground">{exp.company}</h3>
+            <h3 class="font-medium text-foreground">{experience.company}</h3>
             <span class="text-xs font-mono text-muted-foreground">
-              {exp.startYear} &mdash; {exp.endYear}
+              {experience.start} &mdash; {experience.end}
             </span>
           </div>
-          <p class="text-sm text-muted-foreground mt-0.5">{exp.position}</p>
-          {exp.description && (
+          <p class="text-sm text-muted-foreground mt-0.5">
+            {experience.position}
+          </p>
+          {experience.description && (
             <p class="mt-2 text-sm text-muted-foreground/75 leading-relaxed">
-              {exp.description}
+              {experience.description}
             </p>
           )}
         </div>

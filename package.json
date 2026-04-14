@@ -6,7 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "export:content": "bun run scripts/export-sanity-content.ts",
+    "check": "astro check && bun run scripts/validate-content.ts",
+    "format": "bunx prettier --write ."
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",
@@ -20,10 +23,6 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
-    "@sanity/astro": "^3.2.11",
-    "@sanity/client": "^7.13.2",
-    "@sanity/image-url": "^2.0.2",
-    "@sanity/vision": "^5.0.1",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
@@ -38,12 +37,13 @@
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "react-is": "^19.2.3",
-    "sanity": "^5.0.1",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "tw-animate-css": "^1.4.0"
+    "@astrojs/check": "^0.9.8",
+    "tw-animate-css": "^1.4.0",
+    "typescript": "^6.0.2"
   }
 }

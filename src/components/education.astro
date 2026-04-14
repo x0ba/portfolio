@@ -1,25 +1,23 @@
 ---
-import { getEducation } from "@/lib/sanity";
-
-const education = await getEducation();
+import { education } from "@/content";
 ---
 
 <div class="flex flex-col gap-3">
   <h2 class="text-xl sm:text-2xl">Education</h2>
   <div class="flex flex-col divide-y divide-border">
     {
-      education.map((edu) => (
+      education.map((item) => (
         <div class="py-4 first:pt-0 last:pb-0">
           <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-            <h3 class="font-medium text-foreground">{edu.school}</h3>
+            <h3 class="font-medium text-foreground">{item.school}</h3>
             <span class="text-xs font-mono text-muted-foreground">
-              {edu.startYear} &mdash; {edu.endYear}
+              {item.start} &mdash; {item.end}
             </span>
           </div>
-          <p class="text-sm text-muted-foreground mt-0.5">{edu.degree}</p>
-          {edu.description && (
+          <p class="text-sm text-muted-foreground mt-0.5">{item.degree}</p>
+          {item.description && (
             <p class="mt-2 text-sm text-muted-foreground/75 leading-relaxed">
-              {edu.description}
+              {item.description}
             </p>
           )}
         </div>

@@ -1,7 +1,6 @@
 /**
- * Ripple theme transition using the View Transitions API.
- * Expands a circular clip-path from the given origin, progressively
- * revealing the new theme underneath.
+ * Theme transition using the View Transitions API.
+ * Cross-fades between themes while preserving Astro route transitions.
  */
 
 interface ViewTransition {
@@ -10,64 +9,110 @@ interface ViewTransition {
   updateCallbackDone: Promise<void>;
 }
 
-declare global {
-  interface Document {
-    startViewTransition?(callback: () => void | Promise<void>): ViewTransition;
-  }
+type Theme = "dark" | "light";
+
+export const THEME_STORAGE_KEY = "theme";
+export const DEFAULT_THEME: Theme = "dark";
+
+const DARK_CLASS = "dark";
+const THEME_TRANSITIONING_CLASS = "theme-transitioning";
+
+function isTheme(value: string | null): value is Theme {
+  return value === "dark" || value === "light";
 }
 
-function applyThemeToggle(): void {
-  document.documentElement.classList.toggle("dark");
-  const isDark = document.documentElement.classList.contains("dark");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+function getStoredTheme() {
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  return isTheme(storedTheme) ? storedTheme : null;
 }
 
-export function toggleThemeWithRipple(x?: number, y?: number): void {
+function resolveTheme() {
+  return getStoredTheme() ?? DEFAULT_THEME;
+}
+
+function applyTheme(theme: Theme) {
+  document.documentElement.classList.toggle(DARK_CLASS, theme === "dark");
+}
+
+export function syncThemeFromStorage() {
+  const theme = resolveTheme();
+  applyTheme(theme);
+  return theme;
+}
+
+function setTheme(theme: Theme) {
+  applyTheme(theme);
+  window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  return theme;
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.contains(DARK_CLASS);
+  return setTheme(isDark ? "light" : "dark");
+}
+
+function animateThemeFade(
+  pseudoElement: "::view-transition-old(root)" | "::view-transition-new(root)",
+) {
+  document.documentElement.animate(
+    {
+      opacity:
+        pseudoElement === "::view-transition-new(root)" ? [0, 1] : [1, 0],
+    },
+    {
+      duration: 180,
+      easing: "ease-out",
+      pseudoElement,
+    },
+  );
+}
+
+export function toggleThemeWithRipple(x?: number, y?: number) {
+  void x;
+  void y;
+
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   ).matches;
-  const supportsVT = typeof document.startViewTransition === "function";
+  const startViewTransition = (
+    document as Document & {
+      startViewTransition?: (
+        callback: () => void | Promise<void>,
+      ) => ViewTransition;
+    }
+  ).startViewTransition;
+  const supportsVT = typeof startViewTransition === "function";
 
   // Fallback: instant toggle
   if (!supportsVT || prefersReduced) {
-    applyThemeToggle();
+    toggleTheme();
     return;
   }
 
-  // Ripple origin — button center or viewport center
-  const cx = x ?? window.innerWidth / 2;
-  const cy = y ?? window.innerHeight / 2;
-
-  // Radius large enough to cover the entire viewport from the origin
-  const maxRadius = Math.hypot(
-    Math.max(cx, window.innerWidth - cx),
-    Math.max(cy, window.innerHeight - cy),
-  );
-
   // Scope the view-transition CSS overrides so they don't affect Astro page transitions
-  document.documentElement.classList.add("theme-transitioning");
+  const cleanup = () => {
+    document.documentElement.classList.remove(THEME_TRANSITIONING_CLASS);
+  };
 
-  const transition = document.startViewTransition!(() => {
-    applyThemeToggle();
-  });
+  document.documentElement.classList.add(THEME_TRANSITIONING_CLASS);
+  let transition: ViewTransition;
 
-  transition.ready.then(() => {
-    document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${cx}px ${cy}px)`,
-          `circle(${maxRadius}px at ${cx}px ${cy}px)`,
-        ],
-      },
-      {
-        duration: 500,
-        easing: "ease-in-out",
-        pseudoElement: "::view-transition-new(root)",
-      },
-    );
-  });
+  try {
+    transition = startViewTransition.call(document, () => {
+      toggleTheme();
+    });
+  } catch {
+    cleanup();
+    toggleTheme();
+    return;
+  }
 
-  transition.finished.then(() => {
-    document.documentElement.classList.remove("theme-transitioning");
-  });
+  void transition.ready
+    .then(() => {
+      animateThemeFade("::view-transition-old(root)");
+      animateThemeFade("::view-transition-new(root)");
+    })
+    .catch(cleanup);
+
+  void transition.finished.finally(cleanup);
 }

@@ -1,9 +1,9 @@
 import { SiGithub } from "react-icons/si";
 import { RiExternalLinkFill } from "react-icons/ri";
+import type { Project } from "@/content";
 import { cn } from "@/lib/utils";
-import type { RouteableSanityProject } from "@/lib/sanity";
 
-export interface ProjectWithOptimizedImage extends RouteableSanityProject {
+export interface ProjectWithOptimizedImage extends Project {
   optimizedImageUrl: string | null;
 }
 
@@ -47,7 +47,7 @@ export default function ProjectDetailContent({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="interactive-link inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
               >
                 <RiExternalLinkFill className="w-4 h-4" />
                 <span>Visit</span>
@@ -58,7 +58,7 @@ export default function ProjectDetailContent({
                 href={project.code}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="interactive-link inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
               >
                 <SiGithub className="w-4 h-4" />
                 <span>Source</span>
@@ -73,7 +73,7 @@ export default function ProjectDetailContent({
           </p>
         )}
 
-        {project.tags && project.tags.length > 0 && (
+        {project.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 pt-1">
             {project.tags.map((tag) => (
               <span

@@ -1,19 +1,13 @@
 ---
 import { getImage } from "astro:assets";
-import GlobalLayout from "@/layouts/global.astro";
+import ScrollAnimate from "@/components/scroll-animate.astro";
 import ProjectDetailContent from "@/components/project-detail-content";
-import {
-  getProjectBySlug,
-  getProjectSlugs,
-  isRouteableProject,
-  urlFor,
-} from "@/lib/sanity";
+import { projects, site } from "@/content";
+import GlobalLayout from "@/layouts/global.astro";
 
 export async function getStaticPaths() {
-  const slugs = await getProjectSlugs();
-
-  return slugs.map((slug) => ({
-    params: { slug },
+  return projects.map((project) => ({
+    params: { slug: project.slug },
   }));
 }
 
@@ -23,42 +17,43 @@ if (!slug) {
   return Astro.redirect("/404");
 }
 
-const project = await getProjectBySlug(slug);
+const project = projects.find((item) => item.slug === slug);
 
-if (!project || !isRouteableProject(project)) {
+if (!project) {
   return Astro.redirect("/404");
 }
 
-const optimizedImageUrl = project.image
-  ? (
-      await getImage({
-        src: urlFor(project.image).width(1600).height(900).url(),
-        width: 1600,
-        height: 900,
-      })
-    ).src
-  : null;
+const optimizedImageUrl = (
+  await getImage({
+    src: project.image,
+    width: 1600,
+    height: 900,
+  })
+).src;
 
-const pageTitle = `${project.name} | Projects | Daniel Xu`;
+const pageTitle = `${project.name} | Projects | ${site.personName}`;
 const pageDescription =
-  project.description ??
-  `Project details for ${project.name}.`;
+  project.description || `Project details for ${project.name}.`;
 ---
 
 <GlobalLayout title={pageTitle} description={pageDescription}>
   <div class="flex flex-col gap-6">
-    <a
-      href="/projects"
-      class="text-sm text-muted-foreground hover:text-foreground transition-colors"
-    >
-      Back to Projects
-    </a>
+    <ScrollAnimate stagger={0}>
+      <a
+        href="/projects"
+        class="interactive-link text-sm text-muted-foreground hover:text-foreground"
+      >
+        Back to Projects
+      </a>
+    </ScrollAnimate>
 
-    <div class="rounded-2xl border border-border bg-card overflow-hidden">
-      <ProjectDetailContent
-        project={{ ...project, optimizedImageUrl }}
-        titleAs="h1"
-      />
-    </div>
+    <ScrollAnimate stagger={50}>
+      <div class="rounded-2xl border border-border bg-card overflow-hidden">
+        <ProjectDetailContent
+          project={{ ...project, optimizedImageUrl }}
+          titleAs="h1"
+        />
+      </div>
+    </ScrollAnimate>
   </div>
 </GlobalLayout>

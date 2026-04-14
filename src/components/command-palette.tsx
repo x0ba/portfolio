@@ -1,52 +1,55 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { navigate } from "astro:transitions/client";
 import { Command } from "cmdk";
 import {
-  Home,
-  FolderOpen,
-  Wrench,
-  Sun,
-  Moon,
   FileUser,
-  Mail,
+  FolderOpen,
   Github,
+  Home,
   Linkedin,
+  Mail,
+  Moon,
+  Sun,
+  Wrench,
 } from "lucide-react";
+import { site } from "@/content";
 import { toggleThemeWithRipple } from "@/lib/theme-transition";
+
+const githubUrl =
+  site.socials.find((social) => social.label === "GitHub")?.href || "#";
+const linkedinUrl =
+  site.socials.find((social) => social.label === "LinkedIn")?.href || "#";
 
 export default function CommandPalette() {
   const [open, setOpen] = useState(false);
 
-  // Keyboard shortcut: Cmd+K / Ctrl+K
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
+    const handler = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+        event.preventDefault();
         setOpen((prev) => !prev);
       }
     };
+
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
   }, []);
 
-  // Listen for custom event from navbar trigger button
   useEffect(() => {
     const handler = () => setOpen(true);
     document.addEventListener("open-command-palette", handler);
     return () => document.removeEventListener("open-command-palette", handler);
   }, []);
 
-  const runAndClose = useCallback(
-    (fn: () => void) => {
-      fn();
-      setOpen(false);
-    },
-    [],
-  );
+  const runAndClose = useCallback((fn: () => void) => {
+    fn();
+    setOpen(false);
+  }, []);
 
   const navigateTo = useCallback(
-    (path: string) => {
+    (targetPath: string) => {
       runAndClose(() => {
-        window.location.href = path;
+        void navigate(targetPath);
       });
     },
     [runAndClose],
@@ -60,13 +63,15 @@ export default function CommandPalette() {
 
   const copyEmail = useCallback(() => {
     runAndClose(() => {
-      navigator.clipboard.writeText("hi@danielx.me");
+      navigator.clipboard.writeText(site.email);
     });
   }, [runAndClose]);
 
   const openExternal = useCallback(
     (url: string) => {
-      runAndClose(() => window.open(url, "_blank"));
+      runAndClose(() => {
+        window.open(url, "_blank");
+      });
     },
     [runAndClose],
   );
@@ -79,16 +84,14 @@ export default function CommandPalette() {
 
   return (
     <>
-      {/* Overlay — rendered as a sibling, behind the dialog */}
       <div cmdk-overlay="" onClick={() => setOpen(false)} />
 
-      {/* Dialog wrapper — on top of overlay */}
       <div cmdk-dialog-wrapper="">
         <Command label="Command palette">
           <Command.Input
             placeholder="Type a command or search..."
-            onKeyDown={(e) => {
-              if (e.key === "Escape") setOpen(false);
+            onKeyDown={(event) => {
+              if (event.key === "Escape") setOpen(false);
             }}
             autoFocus
           />
@@ -131,7 +134,7 @@ export default function CommandPalette() {
                 Toggle Theme
               </Command.Item>
               <Command.Item
-                onSelect={() => openExternal("/resume.pdf")}
+                onSelect={() => openExternal(site.resumePath)}
                 value="resume cv"
               >
                 <FileUser className="w-4 h-4" />
@@ -147,16 +150,14 @@ export default function CommandPalette() {
 
             <Command.Group heading="Social">
               <Command.Item
-                onSelect={() => openExternal("https://github.com/x0ba")}
+                onSelect={() => openExternal(githubUrl)}
                 value="github"
               >
                 <Github className="w-4 h-4" />
                 GitHub
               </Command.Item>
               <Command.Item
-                onSelect={() =>
-                  openExternal("https://www.linkedin.com/in/daniel-xu-sd")
-                }
+                onSelect={() => openExternal(linkedinUrl)}
                 value="linkedin"
               >
                 <Linkedin className="w-4 h-4" />

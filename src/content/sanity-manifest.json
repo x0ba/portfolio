@@ -1,0 +1,319 @@
+{
+  "source": {
+    "projectId": "84m1lpmy",
+    "dataset": "production",
+    "apiVersion": "v2025-02-19"
+  },
+  "counts": {
+    "categories": 2,
+    "projects": 5,
+    "experiences": 3,
+    "education": 1,
+    "stackItems": 11,
+    "doohickeys": 1,
+    "imageAssets": 10,
+    "fileAssets": 12
+  },
+  "documents": {
+    "categories": [
+      {
+        "id": "3d536588-0598-4365-a0b6-68c2a1e202a8",
+        "slug": "web",
+        "title": "Web"
+      },
+      {
+        "id": "7c7be988-69f7-42d0-8df1-c3ab633eeec1",
+        "slug": "aiml",
+        "title": "AI/ML"
+      }
+    ],
+    "projects": [
+      {
+        "id": "0d20b64f-75ff-4db0-b3c2-435c39fde1f1",
+        "slug": "rxlog",
+        "imageAssetId": "image-5acaff330e1287714eb3ce2d66252a930b149e9f-2894x1808-png"
+      },
+      {
+        "id": "e9b642ae-42aa-4d5b-9a0c-a19fca6b0faa",
+        "slug": "ssa-at-ucsd-member-dashboard",
+        "imageAssetId": "image-84a4c6489c6a7b80fe061893fca7d9cda238d858-2940x1718-png"
+      },
+      {
+        "id": "5b4aea0a-8dad-4b58-bb0d-31fb1cec03b3",
+        "slug": "schedulesync",
+        "imageAssetId": "image-070a6744212f09105cb66d117642cf9b9114685a-2940x1716-png"
+      },
+      {
+        "id": "cbb17570-4d75-477d-99c0-76d995293b37",
+        "slug": "snake-game-agent",
+        "imageAssetId": "image-6d6bd3f0a7580eac94c7b818a3f413349304339d-2940x1912-png"
+      },
+      {
+        "id": "2308e24e-8498-479c-944f-98d50838aa73",
+        "slug": "ssa-landing-page",
+        "imageAssetId": "image-ba048e65cf8f2cb50ff2de17b1ffd3834ffb7c25-2940x1716-png"
+      }
+    ],
+    "experiences": [
+      {
+        "id": "03f019f9-1f85-459b-a240-502ed34cf69e",
+        "company": "Polylabs"
+      },
+      {
+        "id": "be3b000e-72b3-47b2-a689-8a36d4e24e7b",
+        "company": "Symphonic Student Association at UCSD"
+      },
+      {
+        "id": "c839c885-5892-4761-9bac-15f4a3c07a96",
+        "company": "IEEE UC San Diego Student Branch"
+      }
+    ],
+    "education": [
+      {
+        "id": "37bcfbfb-1c37-4e13-a5e1-d461415640e0",
+        "school": "University of California, San Diego"
+      }
+    ],
+    "stackItems": [
+      {
+        "id": "d288ea15-f9d6-4133-8b04-a636cec6c3ce",
+        "name": "TanStack Start"
+      },
+      {
+        "id": "f5bcaa80-474e-494c-b767-23f96ec83670",
+        "name": "Convex"
+      },
+      {
+        "id": "fe4ee817-8a22-422b-986f-def0dd98ce54",
+        "name": "TypeScript"
+      },
+      {
+        "id": "92268ccb-9743-4532-9ca0-62c06fd6d022",
+        "name": "Next.js"
+      },
+      {
+        "id": "55850f05-2029-4966-8d46-f0ca52aa0737",
+        "name": "React"
+      },
+      {
+        "id": "36fbab8d-024e-41ef-97d7-bfc480a7d0a6",
+        "name": "tRPC"
+      },
+      {
+        "id": "73c7ef44-19c1-4f28-a7df-3d3f2da9e210",
+        "name": "PostgreSQL"
+      },
+      {
+        "id": "e67a770c-4122-41a8-b753-c3ebd34c3426",
+        "name": "Drizzle"
+      },
+      {
+        "id": "045eb230-b0a7-4cc5-ae7e-0e7c6a9a5242",
+        "name": "Supabase"
+      },
+      {
+        "id": "b47b0065-39d9-4992-91ab-11463dbde0f3",
+        "name": "Clerk"
+      },
+      {
+        "id": "ed1ea065-266e-43b4-8cd7-c83e49b7c28c",
+        "name": "Astro"
+      }
+    ],
+    "doohickeys": [
+      {
+        "id": "5be3da89-59b2-4212-ab7e-b2794898c849",
+        "slug": "actual-good-final-grade-calculator"
+      }
+    ],
+    "siteSettings": {
+      "id": "89ddda47-9079-4500-818e-0a834c11b029",
+      "title": "Portfolio",
+      "resumeAssetId": "file-b08160a061e1538091ef33c5dc57eb424d3ed894-pdf"
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "id": "image-b106dce1631c01bc5c33874d0c2dd4409c45f4a9-2900x1760-jpg",
+        "originalFilename": "SCR-20260303-kppp.jpeg",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/b106dce1631c01bc5c33874d0c2dd4409c45f4a9-2900x1760.jpg",
+        "localPath": "src/content/assets/images/scr-20260303-kppp.jpeg",
+        "referencedBy": []
+      },
+      {
+        "id": "image-070a6744212f09105cb66d117642cf9b9114685a-2940x1716-png",
+        "originalFilename": "SCR-20260317-resa.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/070a6744212f09105cb66d117642cf9b9114685a-2940x1716.png",
+        "localPath": "src/content/assets/images/scr-20260317-resa.png",
+        "referencedBy": ["project:schedulesync"]
+      },
+      {
+        "id": "image-5acaff330e1287714eb3ce2d66252a930b149e9f-2894x1808-png",
+        "originalFilename": "SCR-20260329-tplk.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/5acaff330e1287714eb3ce2d66252a930b149e9f-2894x1808.png",
+        "localPath": "src/content/assets/images/scr-20260329-tplk.png",
+        "referencedBy": ["project:rxlog"]
+      },
+      {
+        "id": "image-7fc23448e0bc0a412f0b5294a4fa5e3f0202a5ae-3164x2070-png",
+        "originalFilename": "dashboard.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/7fc23448e0bc0a412f0b5294a4fa5e3f0202a5ae-3164x2070.png",
+        "localPath": "src/content/assets/images/dashboard-7fc23448.png",
+        "referencedBy": []
+      },
+      {
+        "id": "image-84a4c6489c6a7b80fe061893fca7d9cda238d858-2940x1718-png",
+        "originalFilename": "dashboard.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/84a4c6489c6a7b80fe061893fca7d9cda238d858-2940x1718.png",
+        "localPath": "src/content/assets/images/dashboard-84a4c648.png",
+        "referencedBy": ["project:ssa-at-ucsd-member-dashboard"]
+      },
+      {
+        "id": "image-1d9910c24a433683f063a6fcc4066c3568bdb6d2-3164x2070-png",
+        "originalFilename": "schedulesync.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/1d9910c24a433683f063a6fcc4066c3568bdb6d2-3164x2070.png",
+        "localPath": "src/content/assets/images/schedulesync.png",
+        "referencedBy": []
+      },
+      {
+        "id": "image-6d6bd3f0a7580eac94c7b818a3f413349304339d-2940x1912-png",
+        "originalFilename": "snake.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/6d6bd3f0a7580eac94c7b818a3f413349304339d-2940x1912.png",
+        "localPath": "src/content/assets/images/snake.png",
+        "referencedBy": ["project:snake-game-agent"]
+      },
+      {
+        "id": "image-ba048e65cf8f2cb50ff2de17b1ffd3834ffb7c25-2940x1716-png",
+        "originalFilename": "ssa-web.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/ba048e65cf8f2cb50ff2de17b1ffd3834ffb7c25-2940x1716.png",
+        "localPath": "src/content/assets/images/ssa-web.png",
+        "referencedBy": ["project:ssa-landing-page"]
+      },
+      {
+        "id": "image-7535b56364ad8f7d341174f70e621e40d9cb0c4f-3164x2070-png",
+        "originalFilename": "ssalanding.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/7535b56364ad8f7d341174f70e621e40d9cb0c4f-3164x2070.png",
+        "localPath": "src/content/assets/images/ssalanding.png",
+        "referencedBy": []
+      },
+      {
+        "id": "image-434a2d22b34b33702a3a63f8011645448a3fec91-3164x2070-png",
+        "originalFilename": "xgallery.png",
+        "sourceUrl": "https://cdn.sanity.io/images/84m1lpmy/production/434a2d22b34b33702a3a63f8011645448a3fec91-3164x2070.png",
+        "localPath": "src/content/assets/images/xgallery.png",
+        "referencedBy": []
+      }
+    ],
+    "files": [
+      {
+        "id": "file-6108225a6b0ec9f139b6c59a86d05c0fb0593299-pdf",
+        "originalFilename": "Daniel-Xu-Resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/6108225a6b0ec9f139b6c59a86d05c0fb0593299.pdf",
+        "mimeType": "application/pdf",
+        "size": 107085,
+        "localPath": "public/files/daniel-xu-resume.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-1bbe7385204ed1448d89da1ed91b8f078948b79e-pdf",
+        "originalFilename": "danielxu-resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/1bbe7385204ed1448d89da1ed91b8f078948b79e.pdf",
+        "mimeType": "application/pdf",
+        "size": 103612,
+        "localPath": "public/files/danielxu-resume-1bbe7385.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-5a801464947edca06f8f12b5454bd6b0dfb8c64b-pdf",
+        "originalFilename": "danielxu-resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/5a801464947edca06f8f12b5454bd6b0dfb8c64b.pdf",
+        "mimeType": "application/pdf",
+        "size": 103310,
+        "localPath": "public/files/danielxu-resume-5a801464.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-b08160a061e1538091ef33c5dc57eb424d3ed894-pdf",
+        "originalFilename": "danielxu-resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/b08160a061e1538091ef33c5dc57eb424d3ed894.pdf",
+        "mimeType": "application/pdf",
+        "size": 102839,
+        "localPath": "public/resume.pdf",
+        "referencedBy": ["siteSettings:resume"]
+      },
+      {
+        "id": "file-bb2b0c88dfac63256e3b9ac41ccb06c6eb60ed76-pdf",
+        "originalFilename": "danielxu-resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/bb2b0c88dfac63256e3b9ac41ccb06c6eb60ed76.pdf",
+        "mimeType": "application/pdf",
+        "size": 103310,
+        "localPath": "public/files/danielxu-resume-bb2b0c88.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-5e91545e1442c0df94ef4f1857a6d8f31bf867e6-pdf",
+        "originalFilename": "danielxu_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/5e91545e1442c0df94ef4f1857a6d8f31bf867e6.pdf",
+        "mimeType": "application/pdf",
+        "size": 106858,
+        "localPath": "public/files/danielxu-resume-5e91545e.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-8b999dcfd4a37466be2ae2d20341af449f9efe29-pdf",
+        "originalFilename": "danielxu_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/8b999dcfd4a37466be2ae2d20341af449f9efe29.pdf",
+        "mimeType": "application/pdf",
+        "size": 106368,
+        "localPath": "public/files/danielxu-resume-8b999dcf.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-96207d887933e2ee6fbd2ef16681d67ec0b807a0-pdf",
+        "originalFilename": "danielxu_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/96207d887933e2ee6fbd2ef16681d67ec0b807a0.pdf",
+        "mimeType": "application/pdf",
+        "size": 106533,
+        "localPath": "public/files/danielxu-resume-96207d88.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-b8c2db078f5128f58bcc5634cb56960364a2eb63-pdf",
+        "originalFilename": "danielxu_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/b8c2db078f5128f58bcc5634cb56960364a2eb63.pdf",
+        "mimeType": "application/pdf",
+        "size": 106148,
+        "localPath": "public/files/danielxu-resume-b8c2db07.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-fc7adbd38f1289c44a08ffffa84585c637a04e24-pdf",
+        "originalFilename": "danielxu_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/fc7adbd38f1289c44a08ffffa84585c637a04e24.pdf",
+        "mimeType": "application/pdf",
+        "size": 106185,
+        "localPath": "public/files/danielxu-resume-fc7adbd3.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-4a5653c02fd3db429c1dd10d4cf05fc556ef89e5-pdf",
+        "originalFilename": "main_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/4a5653c02fd3db429c1dd10d4cf05fc556ef89e5.pdf",
+        "mimeType": "application/pdf",
+        "size": 102675,
+        "localPath": "public/files/main-resume-4a5653c0.pdf",
+        "referencedBy": []
+      },
+      {
+        "id": "file-cc7f4662340f6e2a0752616b4fab07347db87a44-pdf",
+        "originalFilename": "main_resume.pdf",
+        "sourceUrl": "https://cdn.sanity.io/files/84m1lpmy/production/cc7f4662340f6e2a0752616b4fab07347db87a44.pdf",
+        "mimeType": "application/pdf",
+        "size": 106391,
+        "localPath": "public/files/main-resume-cc7f4662.pdf",
+        "referencedBy": []
+      }
+    ]
+  }
+}

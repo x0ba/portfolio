@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
-import type { SanityStackItem } from "@/lib/sanity";
+import type { StackItem } from "@/content";
 
 interface StackProps {
-  items: SanityStackItem[];
+  items: StackItem[];
 }
 
 export default function Stack({ items }: StackProps) {
@@ -12,8 +12,8 @@ export default function Stack({ items }: StackProps) {
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
           <div
-            key={item._id}
-            className="flex items-center gap-1.5 text-sm text-muted-foreground bg-secondary px-2.5 py-1 rounded-md"
+            key={item.name}
+            className="interactive-button flex items-center gap-1.5 text-sm text-muted-foreground bg-secondary px-2.5 py-1 rounded-md"
           >
             {item.iconName && (
               <Icon icon={item.iconName} width={16} height={16} />

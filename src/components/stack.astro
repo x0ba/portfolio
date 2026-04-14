@@ -1,8 +1,6 @@
 ---
-import { getStackItems } from "@/lib/sanity";
-import Stack from "./stack";
-
-const stackItems = await getStackItems();
+import { stackItems } from "@/content";
+import StackList from "./stack";
 ---
 
-<Stack items={stackItems} client:load />
+<StackList items={stackItems} client:load />

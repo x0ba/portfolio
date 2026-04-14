@@ -1,1 +1,19 @@
-<slot />
+---
+interface Props {
+  stagger?: number;
+  variant?: "fade-in-up" | "fade-in";
+  class?: string;
+}
+
+const {
+  stagger = 0,
+  variant = "fade-in-up",
+  class: className = "",
+} = Astro.props;
+
+const motionClass = variant === "fade-in" ? "motion-enter-fade" : "motion-enter";
+---
+
+<div class:list={[motionClass, className]} style={`--motion-delay: ${stagger}ms;`}>
+  <slot />
+</div>

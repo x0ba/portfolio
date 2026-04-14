@@ -1,11 +1,18 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 
-const supportsHover =
-  typeof window !== "undefined" &&
-  window.matchMedia("(hover: hover)").matches;
+function canUseTilt() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  return (
+    window.matchMedia("(hover: hover)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
 
 export function attachTilt(el: HTMLElement, maxDeg = 6): () => void {
-  if (!supportsHover) return () => {};
+  if (!canUseTilt()) return () => {};
 
   const handleMouseMove = (e: MouseEvent) => {
     const rect = el.getBoundingClientRect();
