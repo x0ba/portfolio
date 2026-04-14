@@ -27,7 +27,7 @@ const optimizedImage = await getImage({ src: image, format: "webp" });
 const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
 ---
 
-<html lang="en">
+<html lang="en" data-route-motion="initial">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -56,14 +56,42 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
       define:vars={{
         defaultTheme: DEFAULT_THEME,
         themeStorageKey: THEME_STORAGE_KEY,
+        routeMotionAttribute: "data-route-motion",
       }}
     >
       const isTheme = (value) => value === "dark" || value === "light";
+      const getDocumentRoot = (doc = document) => doc.documentElement;
+      const setRouteMotion = (state, doc = document) => {
+        getDocumentRoot(doc).setAttribute(routeMotionAttribute, state);
+      };
+      const cancelScheduledRouteMotionSettle = () => {
+        if (window.__portfolioRouteMotionFrame === undefined) return;
+
+        cancelAnimationFrame(window.__portfolioRouteMotionFrame);
+        window.__portfolioRouteMotionFrame = undefined;
+      };
+      const scheduleRouteMotionSettle = () => {
+        cancelScheduledRouteMotionSettle();
+
+        window.__portfolioRouteMotionFrame = requestAnimationFrame(() => {
+          setRouteMotion("settled");
+          window.__portfolioRouteMotionFrame = undefined;
+        });
+      };
 
       const syncTheme = () => {
         const storedTheme = localStorage.getItem(themeStorageKey);
         const theme = isTheme(storedTheme) ? storedTheme : defaultTheme;
         document.documentElement.classList.toggle("dark", theme === "dark");
+      };
+
+      const handleBeforePreparation = () => {
+        cancelScheduledRouteMotionSettle();
+        setRouteMotion("navigating");
+      };
+
+      const handleBeforeSwap = (event) => {
+        setRouteMotion("navigating", event.newDocument);
       };
 
       if (window.__portfolioThemeSyncHandler) {
@@ -73,17 +101,53 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
         );
       }
 
+      if (window.__portfolioRouteMotionBeforePreparationHandler) {
+        document.removeEventListener(
+          "astro:before-preparation",
+          window.__portfolioRouteMotionBeforePreparationHandler,
+        );
+      }
+
+      if (window.__portfolioRouteMotionBeforeSwapHandler) {
+        document.removeEventListener(
+          "astro:before-swap",
+          window.__portfolioRouteMotionBeforeSwapHandler,
+        );
+      }
+
+      if (window.__portfolioRouteMotionPageLoadHandler) {
+        document.removeEventListener(
+          "astro:page-load",
+          window.__portfolioRouteMotionPageLoadHandler,
+        );
+      }
+
       window.__portfolioThemeSyncHandler = syncTheme;
+      window.__portfolioRouteMotionBeforePreparationHandler =
+        handleBeforePreparation;
+      window.__portfolioRouteMotionBeforeSwapHandler = handleBeforeSwap;
+      window.__portfolioRouteMotionPageLoadHandler = scheduleRouteMotionSettle;
+
+      document.addEventListener(
+        "astro:before-preparation",
+        handleBeforePreparation,
+      );
+      document.addEventListener("astro:before-swap", handleBeforeSwap);
+      document.addEventListener("astro:page-load", scheduleRouteMotionSettle);
       document.addEventListener("astro:after-swap", syncTheme);
+
       syncTheme();
+      scheduleRouteMotionSettle();
     </script>
 
     <Analytics />
   </head>
 
   <body class="text-foreground bg-background flex flex-col min-h-screen">
-    <Navbar />
-    <div style="z-index: 999; position: relative;">
+    <div transition:persist="site-nav">
+      <Navbar />
+    </div>
+    <div transition:persist="command-palette" style="z-index: 999; position: relative;">
       <CommandPalette client:idle />
     </div>
     <main
@@ -93,6 +157,8 @@ const socialImageURL = new URL(optimizedImage.src, Astro.url).href;
       <slot />
     </main>
     <div class="pt-32"></div>
-    <Footer />
+    <div transition:persist="site-footer">
+      <Footer />
+    </div>
   </body>
 </html>
